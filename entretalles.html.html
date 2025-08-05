@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ENTRETALLE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+
+        header {
+            background-color: #003366; /* Azul fuerte */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .cart-icon {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #ff1493; /* Rosa fuerte */
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        section {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+
+        .gallery img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .social-icons {
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            color: #ff1493;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ENTRETALLE</h1>
+        <a href="#" class="cart-icon" title="Carrito de compras"><i class="fas fa-shopping-cart"></i></a>
+    </header>
+
+    <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#galeria">Galería</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
+
+    <section id="inicio">
+        <h2>Bienvenidos</h2>
+        <p>Especialistas en moldería de ropa digital y física, creando diseños únicos y personalizados para tu marca o proyecto.</p>
+    </section>
+
+    <section id="servicios">
+        <h2>Servicios</h2>
+        <div class="card-container">
+            <div class="card">
+                <h3>Moldería Digital</h3>
+                <p>Creación de moldes digitales accesibles para impresión y desarrollo de prototipos virtuales.</p>
+            </div>
+            <div class="card">
+                <h3>Moldería Física</h3>
+                <p>Diseño y confección de moldes físicos para producción en serie o proyectos personalizados.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeria">
+        <h2>Galería</h2>
+        <div class="card-container gallery">
+            <div class="card"><img src="digital1.jpg" alt="Diseño Digital 1"></div>
+            <div class="card"><img src="digital2.jpg" alt="Diseño Digital 2"></div>
+            <div class="card"><img src="fisica1.jpg" alt="Moldería Física 1"></div>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <h2>Contacto</h2>
+        <p>¿Interesado en nuestros servicios? <strong>Más información:</strong></p>
+        <p>Email: gomezmarcela1355@gmail.com</p>
+        <p>Teléfono: 1133627786</p>
+    </section>
+
+    <footer>
+        <p>© 2025 ENTRETALLE. Todos los derechos reservados.</p>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/mgconfeccionesarg" target="_blank" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com/modelistadieñadoratextil" target="_blank" title="Facebook">
+                <i class="fab fa-facebook"></i>
+            </a>
+        </div>
+    </footer>
+
+</body>
+</html>
