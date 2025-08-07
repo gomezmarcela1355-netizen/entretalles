@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ENTRETALLES - Moldes y Ropa</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #111;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    h1 { margin: 0; }
+    section {
+      padding: 1rem;
+    }
+    h2 {
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 0.5rem;
+    }
+    .producto {
+      border: 1px solid #ddd;
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #27ae60;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input, textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ENTRETALLES</h1>
+    <p>Moldería digital y física con envíos a todo el país</p>
+  </header>
+
+  <section>
+    <h2>👕 ROPA PARA HOMBRES</h2>
+
+    <div class="producto">
+      <h3>Buzo Tank Top (XS al XXL)</h3>
+      <img src="https://via.placeholder.com/500x300?text=Buzo+Tank+Top" alt="Buzo Tank Top" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <h3>Jogging Recto (XS al XXL)</h3>
+      <img src="https://via.placeholder.com/500x300?text=Jogging+Recto" alt="Jogging Recto" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <h3>Jogging Chupín (XS al XXL)</h3>
+      <img src="https://via.placeholder.com/500x300?text=Jogging+Chupin" alt="Jogging Chupin" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <h3>Remera Compresión Ranglan (XS al XXL)</h3>
+      <img src="https://via.placeholder.com/500x300?text=Remera+Compresion" alt="Remera Compresión" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <h3>Musculosa Hombre (XS al XXL)</h3>
+      <img src="https://via.placeholder.com/500x300?text=Musculosa+Hombre" alt="Musculosa" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <h3>Campera Canguro (XS al XXL)</h3>
+      <img src="https://via.placeholder.com/500x300?text=Campera+Canguro" alt="Campera" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+
+  </section>
+
+  <section>
+    <h2>👗 ROPA PARA MUJERES</h2>
+
+    <div class="producto">
+      <h3>Buzo Crop Top con Capucha (XS al XXL)</h3>
+      <img src="https://via.placeholder.com/500x300?text=Buzo+Crop+Capucha" alt="Buzo Crop" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <h3>Calza con Faja (XS al XXL)</h3>
+      <img src="https://via.placeholder.com/500x300?text=Calza+con+Faja" alt="Calza" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <h3>Short Deportivo (XS al XXL)</h3>
+      <img src="https://via.placeholder.com/500x300?text=Short+Deportivo" alt="Short" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <h3>Jogging con Puños (XS al XXL)</h3>
+      <img src="https://via.placeholder.com/500x300?text=Jogging+con+Pu%C3%B1os" alt="Jogging Puños" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <h3>Remera Crop Top con Manga Larga</h3>
+      <img src="https://via.placeholder.com/500x300?text=Remera+Crop+Manga+Larga" alt="Crop Top" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <h3>Remera Manga Ranglan</h3>
+      <img src="https://via.placeholder.com/500x300?text=Remera+Ranglan" alt="Remera Ranglan" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <h3>Remera Manga Corta</h3>
+      <img src="https://via.placeholder.com/500x300?text=Remera+Corta" alt="Remera Corta" />
+      <button onclick="pagar()">Comprar</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>📩 Formulario de Contacto</h2>
+    <form action="https://formsubmit.co/gomezmarcela1355@gmail.com" method="POST">
+      <input type="text" name="name" placeholder="Tu nombre" required />
+      <input type="email" name="email" placeholder="Tu correo" required />
+      <textarea name="message" rows="5" placeholder="Mensaje" required></textarea>
+      <button type="submit">Enviar mensaje</button>
+    </form>
+  </section>
+
+  <script>
+    function pagar() {
+      window.open("https://www.mercadopago.com.ar/", "_blank");
+    }
+  </script>
+
+</body>
+</html>
