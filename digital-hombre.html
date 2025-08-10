@@ -1,60 +1,84 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENTRETALLES - Hombre</title>
-<style>
-    body { font-family: Arial, sans-serif; margin:0; padding:0; background-color:white; }
-    header { background-color:#003366; color:white; text-align:center; padding:20px 0; }
-    nav { background-color:#ff1493; text-align:center; padding:10px 0; }
-    nav a { color:white; text-decoration:none; font-weight:bold; padding:10px 20px; }
-    h2 { text-align:center; margin:30px 0; }
-    .productos { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:20px; padding:20px; }
-    .card { background:#f7f7f7; padding:20px; text-align:center; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
-    footer { background-color:#003366; color:white; text-align:center; padding:20px; }
+  <meta charset="UTF-8">
+  <title>ENTRETALLES – Hombre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; background-color:#f7f7f7; }
+    header { background-color:#003366; color:white; padding:20px; text-align:center; }
+    nav { background-color:#ff1493; padding:10px; text-align:center; }
+    nav a { color:white; text-decoration:none; font-weight:bold; }
+    .container { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px; padding:20px; }
+    .card { background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); padding:15px; text-align:center; }
+    .card img { width:200px; height:200px; object-fit:cover; border-radius:5px; }
+    .card h3 { color:#003366; }
+    .price { font-weight:bold; margin:10px 0; }
+    .buy-btn { display:inline-block; padding:8px 15px; background-color:#003366; color:white; border-radius:5px; text-decoration:none; }
+    .buy-btn:hover { background-color:#002244; }
+    footer { background-color:#003366; color:white; text-align:center; padding:20px; margin-top:40px; }
     .social-icons img { width:30px; margin:0 10px; vertical-align:middle; }
-</style>
+  </style>
 </head>
 <body>
 
 <header>
-    <h1>ENTRETALLES</h1>
-    <p>Moldería Digital - Hombre</p>
+  <h1>ENTRETALLES</h1>
+  <p>Moldería Hombre</p>
 </header>
 
 <nav>
-    <a href="entretalles.html">Inicio</a>
-    <a href="digital.html">Volver</a>
+  <a href="index.html">Inicio</a>
 </nav>
 
-<h2>Modelos para Hombre</h2>
-<div class="productos">
-    <div class="card">
-        <h3>Remera Manga Corta</h3>
-    </div>
-    <div class="card">
-        <h3>Musculosa</h3>
-    </div>
-    <div class="card">
-        <h3>Campera Canguro</h3>
-    </div>
-</div>
+<section class="container" id="products">
+  <!-- Productos aquí -->
+</section>
 
 <footer>
-    <p>© 2025 Entretalles. Todos los derechos reservados.</p>
-    <div class="social-icons">
-        <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
-        </a>
-        <a href="https://wa.me/541133627786" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-        </a>
-        <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook">
-        </a>
-    </div>
+  <p>© 2025 Entretalles. Todos los derechos reservados.</p>
+  <div class="social-icons">
+    <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+    </a>
+    <a href="https://wa.me/541133627786" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+    <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook">
+    </a>
+  </div>
 </footer>
+
+<script>
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTrbCEjENChoprtVPmgkItuWhb4sX9U80GhSogbzGnp-58R2w-zVKyy4zB1BZvZjhIAQgSk9FWhdaEj/pub?gid=0&single=true&output=csv';
+
+fetch(SHEET_URL)
+  .then(res => res.text())
+  .then(csv => {
+    const rows = csv.trim().split('\n').map(r => r.split(','));
+    const headers = rows.shift();
+    const container = document.getElementById('products');
+    rows.forEach(row => {
+      const item = {};
+      headers.forEach((h, i) => item[h.trim().toLowerCase()] = row[i]);
+      if (item.categoria && item.categoria.toLowerCase() === 'hombre') {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${item.imagen}" alt="${item.nombre}">
+          <h3>${item.nombre}</h3>
+          <div class="price">$${item.precio}</div>
+          <p>${item.descripcion}</p>
+          <a href="${item.link}" target="_blank" class="buy-btn">Comprar</a>
+        `;
+        container.appendChild(card);
+      }
+    });
+  })
+  .catch(err => console.error(err));
+</script>
 
 </body>
 </html>
