@@ -5,16 +5,16 @@
   <title>ENTRETALLES – Hombre</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { margin:0; font-family: Arial, sans-serif; background-color:#f7f7f7; }
+    body { margin:0; padding:0; font-family: Arial, sans-serif; background-color:#f7f7f7; }
     header { background-color:#003366; color:white; padding:20px; text-align:center; }
     nav { background-color:#ff1493; padding:10px; text-align:center; }
-    nav a { color:white; text-decoration:none; font-weight:bold; }
+    nav a { color:white; text-decoration:none; font-weight:bold; margin:0 20px; }
     .container { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px; padding:20px; }
     .card { background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); padding:15px; text-align:center; }
     .card img { width:200px; height:200px; object-fit:cover; border-radius:5px; }
     .card h3 { color:#003366; }
     .price { font-weight:bold; margin:10px 0; }
-    .buy-btn { display:inline-block; padding:8px 15px; background-color:#003366; color:white; border-radius:5px; text-decoration:none; }
+    .buy-btn { display:inline-block; padding:8px 15px; background-color:#003366; color:white; border-radius:5px; text-decoration:none; margin-top:10px; }
     .buy-btn:hover { background-color:#002244; }
     footer { background-color:#003366; color:white; text-align:center; padding:20px; margin-top:40px; }
     .social-icons img { width:30px; margin:0 10px; vertical-align:middle; }
@@ -24,7 +24,7 @@
 
 <header>
   <h1>ENTRETALLES</h1>
-  <p>Moldería Hombre</p>
+  <p>Moldería Digital – Hombre</p>
 </header>
 
 <nav>
@@ -32,7 +32,7 @@
 </nav>
 
 <section class="container" id="products">
-  <!-- Productos aquí -->
+  <!-- Aquí se mostrarán los productos automáticamente -->
 </section>
 
 <footer>
@@ -51,32 +51,36 @@
 </footer>
 
 <script>
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTrbCEjENChoprtVPmgkItuWhb4sX9U80GhSogbzGnp-58R2w-zVKyy4zB1BZvZjhIAQgSk9FWhdaEj/pub?gid=0&single=true&output=csv';
+  const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv';
 
-fetch(SHEET_URL)
-  .then(res => res.text())
-  .then(csv => {
-    const rows = csv.trim().split('\n').map(r => r.split(','));
-    const headers = rows.shift();
-    const container = document.getElementById('products');
-    rows.forEach(row => {
-      const item = {};
-      headers.forEach((h, i) => item[h.trim().toLowerCase()] = row[i]);
-      if (item.categoria && item.categoria.toLowerCase() === 'hombre') {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <img src="${item.imagen}" alt="${item.nombre}">
-          <h3>${item.nombre}</h3>
-          <div class="price">$${item.precio}</div>
-          <p>${item.descripcion}</p>
-          <a href="${item.link}" target="_blank" class="buy-btn">Comprar</a>
-        `;
-        container.appendChild(card);
-      }
-    });
-  })
-  .catch(err => console.error(err));
+  fetch(SHEET_URL)
+    .then(res => res.text())
+    .then(csv => {
+      const rows = csv.trim().split('\n').map(r => r.split(','));
+      const headers = rows.shift();
+      const container = document.getElementById('products');
+
+      rows.forEach(row => {
+        const item = {};
+        headers.forEach((h, i) => {
+          item[h.trim().toLowerCase()] = row[i];
+        });
+
+        if (item.categoria && item.categoria.toLowerCase() === 'hombre') {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <img src="${item.imagen}" alt="${item.nombre}">
+            <h3>${item.nombre}</h3>
+            <div class="price">$${item.precio}</div>
+            <p>${item.descripcion}</p>
+            <a href="${item.link}" target="_blank" class="buy-btn">Comprar</a>
+          `;
+          container.appendChild(card);
+        }
+      });
+    })
+    .catch(err => console.error('Error cargando productos:', err));
 </script>
 
 </body>
