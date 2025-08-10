@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>ENTRETALLES – Mujer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { margin:0; padding:0; font-family: Arial, sans-serif; background-color:#f7f7f7; }
-    header { background-color:#003366; color:white; padding:20px; text-align:center; }
-    nav { background-color:#ff1493; padding:10px; text-align:center; }
-    nav a { color:white; text-decoration:none; font-weight:bold; margin:0 20px; }
-    .container { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px; padding:20px; }
-    .card { background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); padding:15px; text-align:center; }
-    .card img { width:200px; height:200px; object-fit:cover; border-radius:5px; }
-    .card h3 { color:#003366; }
-    .price { font-weight:bold; margin:10px 0; }
-    .buy-btn { display:inline-block; padding:8px 15px; background-color:#003366; color:white; border-radius:5px; text-decoration:none; margin-top:10px; }
-    .buy-btn:hover { background-color:#002244; }
-    footer { background-color:#003366; color:white; text-align:center; padding:20px; margin-top:40px; }
-    .social-icons img { width:30px; margin:0 10px; vertical-align:middle; }
-  </style>
+<meta charset="UTF-8">
+<title>ENTRETALLES – Mujer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { margin:0; font-family: Arial, sans-serif; background-color:#f7f7f7; }
+  header { background-color:#003366; color:white; padding:20px; text-align:center; }
+  nav { background-color:#ff1493; padding:10px; text-align:center; }
+  nav a { color:white; text-decoration:none; font-weight:bold; margin:0 20px; }
+  .container { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px; padding:20px; }
+  .card { background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); padding:15px; text-align:center; }
+  .card img { width:200px; height:200px; object-fit:cover; border-radius:5px; }
+  .card h3 { color:#003366; }
+  .price { font-weight:bold; margin:10px 0; }
+  .buy-btn { display:inline-block; padding:8px 15px; background-color:#003366; color:white; border-radius:5px; text-decoration:none; margin-top:10px; }
+  .buy-btn:hover { background-color:#002244; }
+  footer { background-color:#003366; color:white; text-align:center; padding:20px; margin-top:40px; }
+  .social-icons img { width:30px; margin:0 10px; vertical-align:middle; }
+</style>
 </head>
 <body>
 
@@ -31,9 +31,7 @@
   <a href="index.html">Inicio</a>
 </nav>
 
-<section class="container" id="products">
-  <!-- Aquí se mostrarán los productos automáticamente -->
-</section>
+<section class="container" id="products"></section>
 
 <footer>
   <p>© 2025 Entretalles. Todos los derechos reservados.</p>
@@ -52,18 +50,19 @@
 
 <script>
   const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTN2NtXpP1KlYshEP83rDmtgPVCyr-pgJ05aYCo1HvA2pJCsa5SPyd4-tHK4PqmTrg9vwANVL42Tv7e/pub?gid=0&single=true&output=csv';
+  const MERCADO_PAGO_LINK = 'https://mpago.la/2728tzN';
 
   fetch(SHEET_URL)
     .then(res => res.text())
     .then(csv => {
       const rows = csv.trim().split('\n').map(r => r.split(','));
-      const headers = rows.shift();
+      const headers = rows.shift().map(h => h.trim().toLowerCase());
       const container = document.getElementById('products');
 
       rows.forEach(row => {
         const item = {};
         headers.forEach((h, i) => {
-          item[h.trim().toLowerCase()] = row[i];
+          item[h] = row[i] ? row[i].trim() : '';
         });
 
         if (item.categoria && item.categoria.toLowerCase() === 'mujer') {
@@ -74,7 +73,7 @@
             <h3>${item.nombre}</h3>
             <div class="price">$${item.precio}</div>
             <p>${item.descripcion}</p>
-            <a href="${item.link}" target="_blank" class="buy-btn">Comprar</a>
+            <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
           `;
           container.appendChild(card);
         }
@@ -85,3 +84,4 @@
 
 </body>
 </html>
+
