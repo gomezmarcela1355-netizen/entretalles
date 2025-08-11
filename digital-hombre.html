@@ -1,7 +1,4 @@
-
-track" id="products"></div>
-    <button class="carousel-btn next-btn">&#10095;</button>
-</div><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -30,16 +27,11 @@ nav a {
     font-weight:bold;
     margin:0 20px;
 }
-
-/* CONTENEDOR CARRUSEL */
-.carousel-container {
-    position: relative;
-    overflow: hidden;
-    padding: 20px;
-}
-.carousel-track {
-    display: flex;
-    transition: transform 0.3s ease;
+.container {
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:20px;
+    padding:20px;
 }
 .card {
     background:white;
@@ -47,8 +39,7 @@ nav a {
     box-shadow:0 2px 5px rgba(0,0,0,0.1);
     padding:15px;
     text-align:center;
-    min-width: 220px;
-    margin-right: 20px;
+    position: relative; /* necesario para flecha */
 }
 .card img {
     width:200px;
@@ -75,24 +66,14 @@ nav a {
 .buy-btn:hover {
     background-color:#002244;
 }
-
-/* BOTONES FLECHA */
-.carousel-btn {
+.arrow {
     position: absolute;
     top: 50%;
+    right: 5px;
     transform: translateY(-50%);
-    background-color:#00bfff;
-    color:white;
-    border:none;
-    padding:10px;
-    cursor:pointer;
-    border-radius:50%;
-    font-size:18px;
-    z-index:10;
+    font-size: 20px;
+    color: #00bfff; /* azul */
 }
-.prev-btn { left: 5px; }
-.next-btn { right: 5px; }
-
 footer {
     background-color:#003366;
     color:white;
@@ -115,12 +96,7 @@ footer {
 <nav>
     <a href="index.html">Inicio</a>
 </nav>
-
-<!-- Carrusel con flechas -->
-<div class="carousel-container">
-    <button class="carousel-btn prev-btn">&#10094;</button>
-    <div class="carousel-
-
+<section class="container" id="products"></section>
 <footer>
     <p>© 2025 Entretalles. Todos los derechos reservados.</p>
     <div class="social-icons">
@@ -135,7 +111,6 @@ footer {
         </a>
     </div>
 </footer>
-
 <script>
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv';
 const MERCADO_PAGO_LINK = 'https://mpago.la/14ApgVg';
@@ -162,24 +137,13 @@ fetch(SHEET_URL)
                     <div class="price">$${item.precio}</div>
                     <p>${item.descripcion}</p>
                     <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
+                    <span class="arrow">&#10140;</span>
                 `;
                 container.appendChild(card);
             }
         });
     })
     .catch(err => console.error('Error cargando productos:', err));
-
-// Funcionalidad flechas
-let index = 0;
-const track = document.getElementById('products');
-document.querySelector('.next-btn').addEventListener('click', () => {
-    index++;
-    track.style.transform = `translateX(-${index * 250}px)`;
-});
-document.querySelector('.prev-btn').addEventListener('click', () => {
-    if (index > 0) index--;
-    track.style.transform = `translateX(-${index * 250}px)`;
-});
 </script>
 </body>
 </html>
