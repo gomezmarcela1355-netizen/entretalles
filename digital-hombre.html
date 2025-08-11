@@ -27,19 +27,33 @@ nav a {
     font-weight:bold;
     margin:0 20px;
 }
-.container {
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
-    gap:20px;
-    padding:20px;
+
+/* Contenedor tipo carrusel */
+.carousel-container {
+    position: relative;
+    padding: 20px;
+    overflow: hidden;
 }
+
+/* Lista horizontal */
+.carousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+.carousel::-webkit-scrollbar {
+    display: none; /* Ocultar scroll */
+}
+
 .card {
+    flex: 0 0 auto;
     background:white;
     border-radius:8px;
     box-shadow:0 2px 5px rgba(0,0,0,0.1);
     padding:15px;
     text-align:center;
-    position: relative; /* necesario para flecha */
+    width:220px;
 }
 .card img {
     width:200px;
@@ -66,14 +80,31 @@ nav a {
 .buy-btn:hover {
     background-color:#002244;
 }
-.arrow {
+
+/* Flechas */
+.arrow-btn {
     position: absolute;
     top: 50%;
-    right: 5px;
     transform: translateY(-50%);
-    font-size: 20px;
-    color: #00bfff; /* azul */
+    font-size: 30px;
+    color: #00bfff;
+    background: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 10;
 }
+.arrow-btn:hover {
+    background: #e6f7ff;
+}
+.arrow-left {
+    left: 5px;
+}
+.arrow-right {
+    right: 5px;
+}
+
 footer {
     background-color:#003366;
     color:white;
@@ -96,7 +127,13 @@ footer {
 <nav>
     <a href="index.html">Inicio</a>
 </nav>
-<section class="container" id="products"></section>
+
+<div class="carousel-container">
+    <span class="arrow-btn arrow-left" onclick="scrollCarousel(-1)">&#10094;</span>
+    <div class="carousel" id="products"></div>
+    <span class="arrow-btn arrow-right" onclick="scrollCarousel(1)">&#10095;</span>
+</div>
+
 <footer>
     <p>© 2025 Entretalles. Todos los derechos reservados.</p>
     <div class="social-icons">
@@ -111,6 +148,7 @@ footer {
         </a>
     </div>
 </footer>
+
 <script>
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv';
 const MERCADO_PAGO_LINK = 'https://mpago.la/14ApgVg';
@@ -137,15 +175,18 @@ fetch(SHEET_URL)
                     <div class="price">$${item.precio}</div>
                     <p>${item.descripcion}</p>
                     <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
-                    <span class="arrow">&#10140;</span>
                 `;
                 container.appendChild(card);
             }
         });
     })
     .catch(err => console.error('Error cargando productos:', err));
+
+function scrollCarousel(direction) {
+    const carousel = document.getElementById('products');
+    const scrollAmount = 240; // desplazamiento en px
+    carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+}
 </script>
 </body>
 </html>
-
-
