@@ -28,6 +28,19 @@ nav a {
     margin:0 20px;
 }
 
+/* Buscador */
+.search-box {
+    text-align: center;
+    margin: 20px;
+}
+.search-box input {
+    padding: 10px;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
 /* Contenedor tipo carrusel */
 .carousel-container {
     position: relative;
@@ -43,7 +56,7 @@ nav a {
     scroll-behavior: smooth;
 }
 .carousel::-webkit-scrollbar {
-    display: none; /* Ocultar scroll */
+    display: none;
 }
 
 .card {
@@ -53,13 +66,12 @@ nav a {
     box-shadow:0 2px 5px rgba(0,0,0,0.1);
     padding:15px;
     text-align:center;
-    width:250px;
+    width:220px;
 }
 .card img {
-    width:250px;
-    height:250px;
-    object-fit:contain;
-    background-color:white;
+    width:200px;
+    height:200px;
+    object-fit:cover;
     border-radius:5px;
 }
 .card h3 {
@@ -129,6 +141,11 @@ footer {
     <a href="index.html">Inicio</a>
 </nav>
 
+<!-- Buscador -->
+<div class="search-box">
+    <input type="text" id="search" placeholder="Buscar prenda...">
+</div>
+
 <div class="carousel-container">
     <span class="arrow-btn arrow-left" onclick="scrollCarousel(-1)">&#10094;</span>
     <div class="carousel" id="products"></div>
@@ -153,6 +170,7 @@ footer {
 <script>
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTN2NtXpP1KlYshEP83rDmtgPVCyr-pgJ05aYCo1HvA2pJCsa5SPyd4-tHK4PqmTrg9vwANVL42Tv7e/pub?gid=0&single=true&output=csv';
 const MERCADO_PAGO_LINK = 'https://mpago.la/14ApgVg';
+let allProducts = [];
 
 fetch(SHEET_URL)
     .then(res => res.text())
@@ -168,26 +186,46 @@ fetch(SHEET_URL)
             });
 
             if (item.categoria && item.categoria.toLowerCase() === 'mujer') {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <img src="${item.imagen}" alt="${item.nombre}">
-                    <h3>${item.nombre}</h3>
-                    <div class="price">$${item.precio}</div>
-                    <p>${item.descripcion}</p>
-                    <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
-                `;
-                container.appendChild(card);
+                allProducts.push(item);
             }
         });
+
+        renderProducts(allProducts);
     })
     .catch(err => console.error('Error cargando productos:', err));
 
+function renderProducts(products) {
+    const container = document.getElementById('products');
+    container.innerHTML = '';
+    products.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <img src="${item.imagen}" alt="${item.nombre}">
+            <h3>${item.nombre}</h3>
+            <div class="price">$${item.precio}</div>
+            <p>${item.descripcion}</p>
+            <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
+        `;
+        container.appendChild(card);
+    });
+}
+
+document.getElementById('search').addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    const filtered = allProducts.filter(item =>
+        item.nombre.toLowerCase().includes(query) ||
+        item.descripcion.toLowerCase().includes(query)
+    );
+    renderProducts(filtered);
+});
+
 function scrollCarousel(direction) {
     const carousel = document.getElementById('products');
-    const scrollAmount = 270; // desplazamiento en px
+    const scrollAmount = 240;
     carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
 </script>
 </body>
 </html>
+
