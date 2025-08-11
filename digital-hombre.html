@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -193,12 +193,12 @@ fetch(SHEET_URL)
 
         renderItems(allItems);
 
-        // Activar filtrado en tiempo real
         document.getElementById('searchInput').addEventListener('input', function() {
             const searchText = this.value.toLowerCase();
             const filtered = allItems.filter(item => 
                 item.nombre.toLowerCase().includes(searchText) || 
-                item.descripcion.toLowerCase().includes(searchText)
+                item.descripcion.toLowerCase().includes(searchText) ||
+                (item.descripcion2 && item.descripcion2.toLowerCase().includes(searchText))
             );
             renderItems(filtered);
         });
@@ -216,6 +216,7 @@ function renderItems(items) {
             <h3>${item.nombre}</h3>
             <div class="price">$${item.precio}</div>
             <p>${item.descripcion}</p>
+            <p>${item.descripcion2 || ''}</p>
             <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
         `;
         container.appendChild(card);
@@ -230,4 +231,5 @@ function scrollCarousel(direction) {
 </script>
 </body>
 </html>
+
 
