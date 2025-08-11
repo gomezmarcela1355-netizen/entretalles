@@ -27,18 +27,18 @@ nav a {
     font-weight:bold;
     margin:0 20px;
 }
-
-/* Buscador */
 .search-box {
-    text-align: center;
-    margin: 20px;
+    text-align:center;
+    padding:15px;
+    background:#f1f1f1;
 }
 .search-box input {
-    padding: 10px;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    padding:8px;
+    width:80%;
+    max-width:400px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:16px;
 }
 
 /* Contenedor tipo carrusel */
@@ -47,8 +47,6 @@ nav a {
     padding: 20px;
     overflow: hidden;
 }
-
-/* Lista horizontal */
 .carousel {
     display: flex;
     gap: 20px;
@@ -58,7 +56,6 @@ nav a {
 .carousel::-webkit-scrollbar {
     display: none;
 }
-
 .card {
     flex: 0 0 auto;
     background:white;
@@ -66,11 +63,11 @@ nav a {
     box-shadow:0 2px 5px rgba(0,0,0,0.1);
     padding:15px;
     text-align:center;
-    width:220px;
+    width:250px;
 }
 .card img {
-    width:200px;
-    height:200px;
+    width:250px;
+    height:250px;
     object-fit:cover;
     border-radius:5px;
 }
@@ -93,8 +90,6 @@ nav a {
 .buy-btn:hover {
     background-color:#002244;
 }
-
-/* Flechas */
 .arrow-btn {
     position: absolute;
     top: 50%;
@@ -117,7 +112,6 @@ nav a {
 .arrow-right {
     right: 5px;
 }
-
 footer {
     background-color:#003366;
     color:white;
@@ -141,9 +135,8 @@ footer {
     <a href="index.html">Inicio</a>
 </nav>
 
-<!-- Buscador -->
 <div class="search-box">
-    <input type="text" id="search" placeholder="Buscar prenda...">
+    <input type="text" id="searchInput" placeholder="Buscar prenda...">
 </div>
 
 <div class="carousel-container">
@@ -211,21 +204,23 @@ function renderProducts(products) {
     });
 }
 
-document.getElementById('search').addEventListener('input', function() {
+document.getElementById('searchInput').addEventListener('input', function() {
     const query = this.value.toLowerCase();
-    const filtered = allProducts.filter(item =>
-        item.nombre.toLowerCase().includes(query) ||
-        item.descripcion.toLowerCase().includes(query)
+    const filtered = allProducts.filter(p => 
+        p.nombre.toLowerCase().includes(query) || 
+        p.descripcion.toLowerCase().includes(query)
     );
     renderProducts(filtered);
 });
 
 function scrollCarousel(direction) {
     const carousel = document.getElementById('products');
-    const scrollAmount = 240;
+    const scrollAmount = 270; 
     carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
 </script>
 </body>
 </html>
+
+
 
