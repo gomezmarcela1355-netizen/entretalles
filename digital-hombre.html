@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>ENTRETALLES – Mujer</title>
+<title>ENTRETALLES – Hombre</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
@@ -122,7 +122,7 @@ footer {
 <body>
 <header>
     <h1>ENTRETALLES</h1>
-    <p>Moldería Digital – Mujer</p>
+    <p>Moldería Digital – Hombre</p>
 </header>
 <nav>
     <a href="index.html">Inicio</a>
@@ -150,7 +150,7 @@ footer {
 </footer>
 
 <script>
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTN2NtXpP1KlYshEP83rDmtgPVCyr-pgJ05aYCo1HvA2pJCsa5SPyd4-tHK4PqmTrg9vwANVL42Tv7e/pub?gid=0&single=true&output=csv';
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv';
 const MERCADO_PAGO_LINK = 'https://mpago.la/14ApgVg';
 
 fetch(SHEET_URL)
@@ -166,7 +166,7 @@ fetch(SHEET_URL)
                 item[h] = row[i] ? row[i].trim() : '';
             });
 
-            if (item.categoria && item.categoria.toLowerCase() === 'mujer') {
+            if (item.categoria && item.categoria.toLowerCase() === 'hombre') {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
