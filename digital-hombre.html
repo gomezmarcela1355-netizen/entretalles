@@ -1,89 +1,92 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>ENTRETALLES – Hombre</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  body { margin:0; font-family: Arial, sans-serif; background-color:#f7f7f7; }
-  header { background-color:#003366; color:white; padding:20px; text-align:center; }
-  nav { background-color:#ff1493; padding:10px; text-align:center; }
-  nav a { color:white; text-decoration:none; font-weight:bold; margin:0 20px; }
-  .container { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px; padding:20px; }
-  .card { background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); padding:15px; text-align:center; }
-  .card img { width:200px; height:200px; object-fit:cover; border-radius:5px; }
-  .card h3 { color:#003366; }
-  .price { font-weight:bold; margin:10px 0; }
-  .buy-btn { display:inline-block; padding:8px 15px; background-color:#003366; color:white; border-radius:5px; text-decoration:none; margin-top:10px; }
-  .buy-btn:hover { background-color:#002244; }
-  footer { background-color:#003366; color:white; text-align:center; padding:20px; margin-top:40px; }
-  .social-icons img { width:30px; margin:0 10px; vertical-align:middle; }
+.carousel-container {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.product-card {
+    flex: 0 0 300px;
+    margin: 10px;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #00bfff; /* Azul */
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 18px;
+    z-index: 10;
+}
+
+.prev-btn { left: 10px; }
+.next-btn { right: 10px; }
 </style>
-</head>
-<body>
 
-<header>
-  <h1>ENTRETALLES</h1>
-  <p>Moldería Digital – Hombre</p>
-</header>
-
-<nav>
-  <a href="index.html">Inicio</a>
-</nav>
-
-<section class="container" id="products"></section>
-
-<footer>
-  <p>© 2025 Entretalles. Todos los derechos reservados.</p>
-  <div class="social-icons">
-    <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
-    </a>
-    <a href="https://wa.me/541133627786" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-    </a>
-    <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook">
-    </a>
-  </div>
-</footer>
+<div class="carousel-container">
+    <button class="carousel-btn prev-btn">&#10094;</button>
+    <div class="carousel-track" id="carouselHombre"></div>
+    <button class="carousel-btn next-btn">&#10095;</button>
+</div>
 
 <script>
-  const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv';
-  const MERCADO_PAGO_LINK = 'https://mpago.la/14ApgVg';
+fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv')
+    .then(response => response.text())
+    .then(data => {
+        const rows = data.split('\n').slice(1);
+        const container = document.getElementById('carouselHombre');
 
-  fetch(SHEET_URL)
-    .then(res => res.text())
-    .then(csv => {
-      const rows = csv.trim().split('\n').map(r => r.split(','));
-      const headers = rows.shift().map(h => h.trim().toLowerCase());
-      const container = document.getElementById('products');
+        rows.forEach(row => {
+            const cols = row.split(',');
+            const nombre = cols[0];
+            const categoria = cols[1];
+            const imagen = cols[2];
+            const precio = cols[3];
+            const descripcion = cols[4];
+            const link = cols[5];
 
-      rows.forEach(row => {
-        const item = {};
-        headers.forEach((h, i) => {
-          item[h] = row[i] ? row[i].trim() : '';
+            if (nombre && imagen) {
+                container.innerHTML += `
+                    <div class="product-card">
+                        <img src="${imagen}" alt="${nombre}" style="width:100%">
+                        <h3>${nombre}</h3>
+                        <p><strong>$${precio}</strong></p>
+                        <p>${descripcion}</p>
+                        <a href="${link}" target="_blank">
+                            <button>Comprar</button>
+                        </a>
+                    </div>
+                `;
+            }
         });
+    });
 
-        if (item.categoria && item.categoria.toLowerCase() === 'hombre') {
-          const card = document.createElement('div');
-          card.className = 'card';
-          card.innerHTML = `
-            <img src="${item.imagen}" alt="${item.nombre}">
-            <h3>${item.nombre}</h3>
-            <div class="price">$${item.precio}</div>
-            <p>${item.descripcion}</p>
-            <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
-          `;
-          container.appendChild(card);
-        }
-      });
-    })
-    .catch(err => console.error('Error cargando productos:', err));
+let index = 0;
+const track = document.getElementById('carouselHombre');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+
+nextBtn.addEventListener('click', () => {
+    index++;
+    track.style.transform = `translateX(-${index * 320}px)`;
+});
+
+prevBtn.addEventListener('click', () => {
+    if (index > 0) index--;
+    track.style.transform = `translateX(-${index * 320}px)`;
+});
 </script>
 
-</body>
-</html>
 
 
 
