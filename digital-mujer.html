@@ -27,18 +27,18 @@ nav a {
     font-weight:bold;
     margin:0 20px;
 }
-.search-box {
+
+/* Buscador */
+.search-container {
     text-align:center;
-    padding:15px;
-    background:#f1f1f1;
+    margin: 15px 0;
 }
-.search-box input {
-    padding:8px;
-    width:80%;
-    max-width:400px;
-    border:1px solid #ccc;
-    border-radius:5px;
-    font-size:16px;
+.search-container input {
+    padding: 8px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 /* Contenedor tipo carrusel */
@@ -47,6 +47,8 @@ nav a {
     padding: 20px;
     overflow: hidden;
 }
+
+/* Lista horizontal */
 .carousel {
     display: flex;
     gap: 20px;
@@ -56,6 +58,7 @@ nav a {
 .carousel::-webkit-scrollbar {
     display: none;
 }
+
 .card {
     flex: 0 0 auto;
     background:white;
@@ -68,7 +71,8 @@ nav a {
 .card img {
     width:250px;
     height:250px;
-    object-fit:cover;
+    object-fit:contain;
+    background-color:white;
     border-radius:5px;
 }
 .card h3 {
@@ -90,6 +94,8 @@ nav a {
 .buy-btn:hover {
     background-color:#002244;
 }
+
+/* Flechas */
 .arrow-btn {
     position: absolute;
     top: 50%;
@@ -112,6 +118,7 @@ nav a {
 .arrow-right {
     right: 5px;
 }
+
 footer {
     background-color:#003366;
     color:white;
@@ -135,7 +142,8 @@ footer {
     <a href="index.html">Inicio</a>
 </nav>
 
-<div class="search-box">
+<!-- Buscador -->
+<div class="search-container">
     <input type="text" id="searchInput" placeholder="Buscar prenda...">
 </div>
 
@@ -163,7 +171,7 @@ footer {
 <script>
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTN2NtXpP1KlYshEP83rDmtgPVCyr-pgJ05aYCo1HvA2pJCsa5SPyd4-tHK4PqmTrg9vwANVL42Tv7e/pub?gid=0&single=true&output=csv';
 const MERCADO_PAGO_LINK = 'https://mpago.la/14ApgVg';
-let allProducts = [];
+let allItems = [];
 
 fetch(SHEET_URL)
     .then(res => res.text())
@@ -179,18 +187,27 @@ fetch(SHEET_URL)
             });
 
             if (item.categoria && item.categoria.toLowerCase() === 'mujer') {
-                allProducts.push(item);
+                allItems.push(item);
             }
         });
 
-        renderProducts(allProducts);
+        renderItems(allItems);
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchText = this.value.toLowerCase();
+            const filtered = allItems.filter(item => 
+                item.nombre.toLowerCase().includes(searchText) || 
+                item.descripcion.toLowerCase().includes(searchText)
+            );
+            renderItems(filtered);
+        });
     })
     .catch(err => console.error('Error cargando productos:', err));
 
-function renderProducts(products) {
+function renderItems(items) {
     const container = document.getElementById('products');
     container.innerHTML = '';
-    products.forEach(item => {
+    items.forEach(item => {
         const card = document.createElement('div');
         card.className = 'card';
         card.innerHTML = `
@@ -204,23 +221,12 @@ function renderProducts(products) {
     });
 }
 
-document.getElementById('searchInput').addEventListener('input', function() {
-    const query = this.value.toLowerCase();
-    const filtered = allProducts.filter(p => 
-        p.nombre.toLowerCase().includes(query) || 
-        p.descripcion.toLowerCase().includes(query)
-    );
-    renderProducts(filtered);
-});
-
 function scrollCarousel(direction) {
     const carousel = document.getElementById('products');
-    const scrollAmount = 270; 
+    const scrollAmount = 270;
     carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
 </script>
 </body>
 </html>
-
-
 
