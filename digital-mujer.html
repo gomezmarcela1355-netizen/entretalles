@@ -53,12 +53,13 @@ nav a {
     box-shadow:0 2px 5px rgba(0,0,0,0.1);
     padding:15px;
     text-align:center;
-    width:220px;
+    width:250px;
 }
 .card img {
-    width:200px;
-    height:200px;
-    object-fit:cover;
+    width:250px;
+    height:250px;
+    object-fit:contain;
+    background-color:white;
     border-radius:5px;
 }
 .card h3 {
@@ -184,11 +185,9 @@ fetch(SHEET_URL)
 
 function scrollCarousel(direction) {
     const carousel = document.getElementById('products');
-    const scrollAmount = 240; // desplazamiento en px
+    const scrollAmount = 270; // desplazamiento en px
     carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
 </script>
 </body>
 </html>
-
-
