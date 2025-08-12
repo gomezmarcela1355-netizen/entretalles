@@ -5,149 +5,35 @@
 <title>ENTRETALLES – Hombre</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body {
-    margin:0;
-    font-family: Arial, sans-serif;
-    background-color:#f7f7f7;
-}
-header {
-    background-color:#003366;
-    color:white;
-    padding:20px;
-    text-align:center;
-}
-nav {
-    background-color:#ff1493;
-    padding:10px;
-    text-align:center;
-}
-nav a {
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-    margin:0 20px;
-}
+body { margin:0; font-family: Arial, sans-serif; background-color:#f7f7f7; }
+header { background-color:#003366; color:white; padding:20px; text-align:center; }
+nav { background-color:#ff1493; padding:10px; text-align:center; }
+nav a { color:white; text-decoration:none; font-weight:bold; margin:0 20px; }
+
+/* Buscador */
+.search-container { text-align:center; margin: 15px 0; }
+.search-container input { padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
 
 /* Contenedor tipo carrusel */
-.carousel-container {
-    position: relative;
-    padding: 20px;
-    overflow: hidden;
-}
-.carousel {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-}
-.carousel::-webkit-scrollbar {
-    display: none;
-}
+.carousel-container { position: relative; padding: 20px; overflow: hidden; }
+.carousel { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; }
+.carousel::-webkit-scrollbar { display: none; }
 
-.card {
-    flex: 0 0 auto;
-    background:white;
-    border-radius:8px;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
-    padding:15px;
-    text-align:center;
-    width:220px;
-}
-.card img {
-    width:200px;
-    height:200px;
-    object-fit:cover;
-    border-radius:5px;
-    cursor:pointer;
-}
-.card h3 {
-    color:#003366;
-}
-.price {
-    font-weight:bold;
-    margin:10px 0;
-}
-.buy-btn {
-    display:inline-block;
-    padding:8px 15px;
-    background-color:#003366;
-    color:white;
-    border-radius:5px;
-    text-decoration:none;
-    margin-top:10px;
-}
-.buy-btn:hover {
-    background-color:#002244;
-}
+.card { flex: 0 0 auto; background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); padding:15px; text-align:center; width:250px; }
+.card img { width:250px; height:250px; object-fit:contain; border-radius:5px; background-color:white; }
+.card h3 { color:#003366; }
+.price { font-weight:bold; margin:10px 0; }
+.buy-btn { display:inline-block; padding:8px 15px; background-color:#003366; color:white; border-radius:5px; text-decoration:none; margin-top:10px; }
+.buy-btn:hover { background-color:#002244; }
 
 /* Flechas */
-.arrow-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 30px;
-    color: #00bfff;
-    background: white;
-    border-radius: 50%;
-    padding: 5px 10px;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    z-index: 10;
-}
-.arrow-btn:hover {
-    background: #e6f7ff;
-}
-.arrow-left {
-    left: 5px;
-}
-.arrow-right {
-    right: 5px;
-}
+.arrow-btn { position: absolute; top: 50%; transform: translateY(-50%); font-size: 30px; color: #00bfff; background: white; border-radius: 50%; padding: 5px 10px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.3); z-index: 10; }
+.arrow-btn:hover { background: #e6f7ff; }
+.arrow-left { left: 5px; }
+.arrow-right { right: 5px; }
 
-footer {
-    background-color:#003366;
-    color:white;
-    text-align:center;
-    padding:20px;
-    margin-top:40px;
-}
-.social-icons img {
-    width:30px;
-    margin:0 10px;
-    vertical-align:middle;
-}
-
-/* Modal lightbox */
-#lightbox {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8);
-    align-items: center;
-    justify-content: center;
-}
-#lightbox img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 8px;
-}
-#lightbox:target {
-    display: flex;
-}
-.close-btn {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 30px;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-.close-btn:hover {
-    color: #ff1493;
-}
+footer { background-color:#003366; color:white; text-align:center; padding:20px; margin-top:40px; }
+.social-icons img { width:30px; margin:0 10px; vertical-align:middle; }
 </style>
 </head>
 <body>
@@ -159,79 +45,75 @@ footer {
     <a href="index.html">Inicio</a>
 </nav>
 
+<!-- Buscador -->
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Buscar prenda...">
+</div>
+
 <div class="carousel-container">
     <span class="arrow-btn arrow-left" onclick="scrollCarousel(-1)">&#10094;</span>
     <div class="carousel" id="products"></div>
     <span class="arrow-btn arrow-right" onclick="scrollCarousel(1)">&#10095;</span>
 </div>
 
-<!-- Lightbox -->
-<div id="lightbox">
-    <a href="#" class="close-btn">&times;</a>
-    <img id="lightbox-img" src="" alt="Vista previa">
-</div>
-
 <footer>
     <p>© 2025 Entretalles. Todos los derechos reservados.</p>
     <div class="social-icons">
-        <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
-        </a>
-        <a href="https://wa.me/541133627786" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-        </a>
-        <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook">
-        </a>
+        <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"></a>
+        <a href="https://wa.me/541133627786" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
+        <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook"></a>
     </div>
 </footer>
 
 <script>
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv';
 const MERCADO_PAGO_LINK = 'https://mpago.la/14ApgVg';
+let allItems = [];
 
 fetch(SHEET_URL)
     .then(res => res.text())
     .then(csv => {
         const rows = csv.trim().split('\n').map(r => r.split(','));
         const headers = rows.shift().map(h => h.trim().toLowerCase());
-        const container = document.getElementById('products');
-
         rows.forEach(row => {
             const item = {};
-            headers.forEach((h, i) => {
-                item[h] = row[i] ? row[i].trim() : '';
-            });
-
+            headers.forEach((h, i) => { item[h] = row[i] ? row[i].trim() : ''; });
             if (item.categoria && item.categoria.toLowerCase() === 'hombre') {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <img src="${item.imagen}" alt="${item.nombre}" onclick="openLightbox('${item.imagen}')">
-                    <h3>${item.nombre}</h3>
-                    <div class="price">$${item.precio}</div>
-                    <p>${item.descripcion}</p>
-                    <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
-                `;
-                container.appendChild(card);
+                allItems.push(item);
             }
         });
-    })
-    .catch(err => console.error('Error cargando productos:', err));
+        renderItems(allItems);
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchText = this.value.toLowerCase();
+            const filtered = allItems.filter(item => 
+                item.nombre.toLowerCase().includes(searchText) || 
+                item.descripcion.toLowerCase().includes(searchText)
+            );
+            renderItems(filtered);
+        });
+    });
+
+function renderItems(items) {
+    const container = document.getElementById('products');
+    container.innerHTML = '';
+    items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <img src="${item.imagen}" alt="${item.nombre}">
+            <h3>${item.nombre}</h3>
+            <div class="price">$${item.precio}</div>
+            <p>${item.descripcion}</p>
+            <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
+        `;
+        container.appendChild(card);
+    });
+}
 
 function scrollCarousel(direction) {
     const carousel = document.getElementById('products');
-    const scrollAmount = 240;
-    carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    carousel.scrollBy({ left: direction * 270, behavior: 'smooth' });
 }
-
-function openLightbox(imgSrc) {
-    document.getElementById('lightbox-img').src = imgSrc;
-    document.getElementById('lightbox').style.display = 'flex';
-}
-document.querySelector('.close-btn').addEventListener('click', () => {
-    document.getElementById('lightbox').style.display = 'none';
-});
 </script>
 </body>
 </html>
