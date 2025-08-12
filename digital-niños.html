@@ -11,37 +11,34 @@ nav { background-color:#ff1493; padding:10px; text-align:center; }
 nav a { color:white; text-decoration:none; font-weight:bold; margin:0 20px; }
 
 /* Buscador */
-.search-container { text-align:center; margin: 15px 0; }
+.search-container { text-align:center; margin:15px 0; }
 .search-container input {
-    padding: 8px; width: 250px; border: 1px solid #ccc;
-    border-radius: 5px; font-size: 16px;
+  padding:8px; width:250px; border:1px solid #ccc; border-radius:5px; font-size:16px;
 }
 
-/* Contenedor tipo carrusel */
-.carousel-container { position: relative; padding: 20px; overflow: hidden; }
-.carousel { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; }
-.carousel::-webkit-scrollbar { display: none; }
+/* Carrusel */
+.carousel-container { position:relative; padding:20px; overflow:hidden; }
+.carousel { display:flex; gap:20px; overflow-x:auto; scroll-behavior:smooth; }
+.carousel::-webkit-scrollbar { display:none; }
 
-.card { flex: 0 0 auto; background:white; border-radius:8px;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1); padding:15px;
-    text-align:center; width:250px; }
-.card img { width:250px; height:250px; object-fit:contain; background-color:white; border-radius:5px; }
+.card { flex:0 0 auto; background:white; border-radius:8px;
+  box-shadow:0 2px 5px rgba(0,0,0,0.1); padding:15px; text-align:center; width:250px; }
+.card img { width:250px; height:250px; object-fit:contain; border-radius:5px; }
 .card h3 { color:#003366; }
 .price { font-weight:bold; margin:10px 0; }
-.buy-btn {
-    display:inline-block; padding:8px 15px; background-color:#003366;
-    color:white; border-radius:5px; text-decoration:none; margin-top:10px;
-}
+.buy-btn { display:inline-block; padding:8px 15px; background-color:#003366;
+  color:white; border-radius:5px; text-decoration:none; margin-top:10px; }
 .buy-btn:hover { background-color:#002244; }
 
 /* Flechas */
-.arrow-btn { position: absolute; top: 50%; transform: translateY(-50%);
-    font-size: 30px; color: #00bfff; background: white; border-radius: 50%;
-    padding: 5px 10px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    z-index: 10; }
-.arrow-btn:hover { background: #e6f7ff; }
-.arrow-left { left: 5px; }
-.arrow-right { right: 5px; }
+.arrow-btn {
+  position:absolute; top:50%; transform:translateY(-50%);
+  font-size:30px; color:#00bfff; background:white; border-radius:50%;
+  padding:5px 10px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.3); z-index:10;
+}
+.arrow-btn:hover { background:#e6f7ff; }
+.arrow-left { left:5px; }
+.arrow-right { right:5px; }
 
 footer { background-color:#003366; color:white; text-align:center; padding:20px; margin-top:40px; }
 .social-icons img { width:30px; margin:0 10px; vertical-align:middle; }
@@ -49,96 +46,84 @@ footer { background-color:#003366; color:white; text-align:center; padding:20px;
 </head>
 <body>
 <header>
-    <h1>ENTRETALLES</h1>
-    <p>Moldería Digital – Niños</p>
+  <h1>ENTRETALLES</h1>
+  <p>Moldería Digital – Niños</p>
 </header>
 <nav>
-    <a href="molderia-digital.html">Volver</a>
+  <a href="molderia-digital.html">Volver</a>
 </nav>
 
-<!-- Buscador -->
 <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Buscar prenda...">
+  <input type="text" id="searchInput" placeholder="Buscar prenda...">
 </div>
 
 <div class="carousel-container">
-    <span class="arrow-btn arrow-left" onclick="scrollCarousel(-1)">&#10094;</span>
-    <div class="carousel" id="products"></div>
-    <span class="arrow-btn arrow-right" onclick="scrollCarousel(1)">&#10095;</span>
+  <span class="arrow-btn arrow-left" onclick="scrollCarousel(-1)">&#10094;</span>
+  <div class="carousel" id="products"></div>
+  <span class="arrow-btn arrow-right" onclick="scrollCarousel(1)">&#10095;</span>
 </div>
 
 <footer>
-    <p>© 2025 Entretalles. Todos los derechos reservados.</p>
-    <div class="social-icons">
-        <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
-        </a>
-        <a href="https://wa.me/541133627786" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-        </a>
-        <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook">
-        </a>
-    </div>
+  <p>© 2025 Entretalles. Todos los derechos reservados.</p>
+  <div class="social-icons">
+    <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"></a>
+    <a href="https://wa.me/541133627786" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
+    <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook"></a>
+  </div>
 </footer>
 
 <script>
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRujC2ikxhM9xXuRm01Mnfew4OYMLc1DX0JhUARc9U_biHfXMhxIB3HDdxwhRnXjW4eEolgtIqY3Plf/pub?gid=0&single=true&output=csv';
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT2pGJPY3fyOiaSeicE7bKk3TqW4uKZaZeznY_mX31fNzgXpjcxUivyuHoMDTZNjrTSnNbTknRZ966y/pub?gid=0&single=true&output=csv';
 const MERCADO_PAGO_LINK = 'https://mpago.la/14ApgVg';
-let allItems = [];
+const allItems = [];
 
-fetch(SHEET_URL)
-    .then(res => res.text())
-    .then(csv => {
-        const rows = csv.trim().split('\n').map(r => r.split(','));
-        const headers = rows.shift().map(h => h.trim().toLowerCase());
-        const container = document.getElementById('products');
-
-        rows.forEach(row => {
-            const item = {};
-            headers.forEach((h, i) => { item[h] = row[i] ? row[i].trim() : ''; });
-            if (item.categoria && item.categoria.toLowerCase() === 'niños') {
-                allItems.push(item);
-            }
-        });
-
-        renderItems(allItems);
-
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchText = this.value.toLowerCase();
-            const filtered = allItems.filter(item =>
-                item.nombre.toLowerCase().includes(searchText) ||
-                item.descripcion.toLowerCase().includes(searchText)
-            );
-            renderItems(filtered);
-        });
-    })
-    .catch(err => console.error('Error cargando productos:', err));
-
-function renderItems(items) {
-    const container = document.getElementById('products');
-    container.innerHTML = '';
-    items.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <img src="${item.imagen}" alt="${item.nombre}">
-            <h3>${item.nombre}</h3>
-            <div class="price">$${item.precio}</div>
-            <p>${item.descripcion}</p>
-            <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
-        `;
-        container.appendChild(card);
-    });
+function normalizeCat(str) {
+  return str ? str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase() : '';
 }
 
-function scrollCarousel(direction) {
-    const carousel = document.getElementById('products');
-    const scrollAmount = 270;
-    carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+fetch(SHEET_URL).then(res => res.text()).then(csv => {
+  const rows = csv.trim().split('\n').map(r => r.split(','));
+  const headers = rows.shift().map(h => h.trim().toLowerCase());
+  rows.forEach(row => {
+    const item = {};
+    headers.forEach((h, i) => { item[h] = row[i] ? row[i].trim() : ''; });
+    if (normalizeCat(item.categoria) === 'ninos') {
+      allItems.push(item);
+    }
+  });
+  renderItems(allItems);
+  document.getElementById('searchInput').addEventListener('input', function() {
+    const text = this.value.toLowerCase();
+    renderItems(allItems.filter(item =>
+      (item.nombre || '').toLowerCase().includes(text) ||
+      (item.descripcion || '').toLowerCase().includes(text)
+    ));
+  });
+}).catch(err => console.error('Error cargando productos:', err));
+
+function renderItems(items) {
+  const container = document.getElementById('products');
+  container.innerHTML = '';
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${item.imagen}" alt="${item.nombre}">
+      <h3>${item.nombre}</h3>
+      <div class="price">${item.precio ? '$' + item.precio : ''}</div>
+      <p>${item.descripcion || ''}</p>
+      <a href="${item.link || MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function scrollCarousel(dir) {
+  document.getElementById('products').scrollBy({ left: dir * 270, behavior: 'smooth' });
 }
 </script>
 </body>
 </html>
+
 
 
