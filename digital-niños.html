@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>ENTRETALLES – Niños</title>
+<title>ENTRETALLES – Hombre</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
@@ -136,7 +136,7 @@ footer {
 <body>
 <header>
     <h1>ENTRETALLES</h1>
-    <p>Moldería Digital – Niños</p>
+    <p>Moldería Digital – Hombre</p>
 </header>
 <nav>
     <a href="index.html">Inicio</a>
@@ -169,7 +169,7 @@ footer {
 </footer>
 
 <script>
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRujC2ikxhM9xXuRm01Mnfew4OYMLc1DX0JhUARc9U_biHfXMhxIB3HDdxwhRnXjW4eEolgtIqY3Plf/pub?gid=0&single=true&output=csv';
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv';
 const MERCADO_PAGO_LINK = 'https://mpago.la/14ApgVg';
 let allItems = [];
 
@@ -186,7 +186,7 @@ fetch(SHEET_URL)
                 item[h] = row[i] ? row[i].trim() : '';
             });
 
-            if (item.categoria && item.categoria.toLowerCase() === 'niños') {
+            if (item.categoria && item.categoria.toLowerCase() === 'hombre') {
                 allItems.push(item);
             }
         });
@@ -197,7 +197,8 @@ fetch(SHEET_URL)
             const searchText = this.value.toLowerCase();
             const filtered = allItems.filter(item => 
                 item.nombre.toLowerCase().includes(searchText) || 
-                item.descripcion.toLowerCase().includes(searchText)
+                item.descripcion.toLowerCase().includes(searchText) ||
+                (item.descripcion2 && item.descripcion2.toLowerCase().includes(searchText))
             );
             renderItems(filtered);
         });
@@ -215,6 +216,7 @@ function renderItems(items) {
             <h3>${item.nombre}</h3>
             <div class="price">$${item.precio}</div>
             <p>${item.descripcion}</p>
+            <p>${item.descripcion2 || ''}</p>
             <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
         `;
         container.appendChild(card);
@@ -229,5 +231,9 @@ function scrollCarousel(direction) {
 </script>
 </body>
 </html>
+
+
+
+
 
 
