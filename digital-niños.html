@@ -5,132 +5,46 @@
 <title>ENTRETALLES – Niños</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body {
-    margin:0;
-    font-family: Arial, sans-serif;
-    background-color:#f7f7f7;
-}
-header {
-    background-color:#003366;
-    color:white;
-    padding:20px;
-    text-align:center;
-}
-nav {
-    background-color:#ff1493;
-    padding:10px;
-    text-align:center;
-}
-nav a {
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-    margin:0 20px;
-}
+body { margin:0; font-family: Arial, sans-serif; background-color:#f7f7f7; }
+header { background-color:#003366; color:white; padding:20px; text-align:center; }
+nav { background-color:#ff1493; padding:10px; text-align:center; }
+nav a { color:white; text-decoration:none; font-weight:bold; margin:0 20px; }
 
 /* Buscador */
-.search-container {
-    text-align:center;
-    margin: 15px 0;
-}
+.search-container { text-align:center; margin: 15px 0; }
 .search-container input {
-    padding: 8px;
-    width: 250px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+    padding: 8px; width: 250px; border: 1px solid #ccc;
+    border-radius: 5px; font-size: 16px;
 }
 
 /* Contenedor tipo carrusel */
-.carousel-container {
-    position: relative;
-    padding: 20px;
-    overflow: hidden;
-}
+.carousel-container { position: relative; padding: 20px; overflow: hidden; }
+.carousel { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; }
+.carousel::-webkit-scrollbar { display: none; }
 
-/* Lista horizontal */
-.carousel {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-}
-.carousel::-webkit-scrollbar {
-    display: none;
-}
-
-.card {
-    flex: 0 0 auto;
-    background:white;
-    border-radius:8px;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
-    padding:15px;
-    text-align:center;
-    width:250px;
-}
-.card img {
-    width:250px;
-    height:250px;
-    object-fit:contain;
-    background-color:white;
-    border-radius:5px;
-}
-.card h3 {
-    color:#003366;
-}
-.price {
-    font-weight:bold;
-    margin:10px 0;
-}
+.card { flex: 0 0 auto; background:white; border-radius:8px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1); padding:15px;
+    text-align:center; width:250px; }
+.card img { width:250px; height:250px; object-fit:contain; background-color:white; border-radius:5px; }
+.card h3 { color:#003366; }
+.price { font-weight:bold; margin:10px 0; }
 .buy-btn {
-    display:inline-block;
-    padding:8px 15px;
-    background-color:#003366;
-    color:white;
-    border-radius:5px;
-    text-decoration:none;
-    margin-top:10px;
+    display:inline-block; padding:8px 15px; background-color:#003366;
+    color:white; border-radius:5px; text-decoration:none; margin-top:10px;
 }
-.buy-btn:hover {
-    background-color:#002244;
-}
+.buy-btn:hover { background-color:#002244; }
 
 /* Flechas */
-.arrow-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 30px;
-    color: #00bfff;
-    background: white;
-    border-radius: 50%;
-    padding: 5px 10px;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    z-index: 10;
-}
-.arrow-btn:hover {
-    background: #e6f7ff;
-}
-.arrow-left {
-    left: 5px;
-}
-.arrow-right {
-    right: 5px;
-}
+.arrow-btn { position: absolute; top: 50%; transform: translateY(-50%);
+    font-size: 30px; color: #00bfff; background: white; border-radius: 50%;
+    padding: 5px 10px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 10; }
+.arrow-btn:hover { background: #e6f7ff; }
+.arrow-left { left: 5px; }
+.arrow-right { right: 5px; }
 
-footer {
-    background-color:#003366;
-    color:white;
-    text-align:center;
-    padding:20px;
-    margin-top:40px;
-}
-.social-icons img {
-    width:30px;
-    margin:0 10px;
-    vertical-align:middle;
-}
+footer { background-color:#003366; color:white; text-align:center; padding:20px; margin-top:40px; }
+.social-icons img { width:30px; margin:0 10px; vertical-align:middle; }
 </style>
 </head>
 <body>
@@ -139,7 +53,7 @@ footer {
     <p>Moldería Digital – Niños</p>
 </header>
 <nav>
-    <a href="index.html">Inicio</a>
+    <a href="molderia-digital.html">Volver</a>
 </nav>
 
 <!-- Buscador -->
@@ -182,10 +96,7 @@ fetch(SHEET_URL)
 
         rows.forEach(row => {
             const item = {};
-            headers.forEach((h, i) => {
-                item[h] = row[i] ? row[i].trim() : '';
-            });
-
+            headers.forEach((h, i) => { item[h] = row[i] ? row[i].trim() : ''; });
             if (item.categoria && item.categoria.toLowerCase() === 'niños') {
                 allItems.push(item);
             }
@@ -195,8 +106,8 @@ fetch(SHEET_URL)
 
         document.getElementById('searchInput').addEventListener('input', function() {
             const searchText = this.value.toLowerCase();
-            const filtered = allItems.filter(item => 
-                item.nombre.toLowerCase().includes(searchText) || 
+            const filtered = allItems.filter(item =>
+                item.nombre.toLowerCase().includes(searchText) ||
                 item.descripcion.toLowerCase().includes(searchText)
             );
             renderItems(filtered);
@@ -229,7 +140,6 @@ function scrollCarousel(direction) {
 </script>
 </body>
 </html>
-
 
 
 
