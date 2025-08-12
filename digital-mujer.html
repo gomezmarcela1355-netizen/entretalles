@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -74,6 +74,7 @@ nav a {
     object-fit:contain;
     background-color:white;
     border-radius:5px;
+    cursor: pointer;
 }
 .card h3 {
     color:#003366;
@@ -119,6 +120,27 @@ nav a {
     right: 5px;
 }
 
+/* Vista previa grande */
+.preview {
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+.preview img {
+    max-width:90%;
+    max-height:90%;
+}
+.preview.close {
+    display:none;
+}
+
 footer {
     background-color:#003366;
     color:white;
@@ -151,6 +173,11 @@ footer {
     <span class="arrow-btn arrow-left" onclick="scrollCarousel(-1)">&#10094;</span>
     <div class="carousel" id="products"></div>
     <span class="arrow-btn arrow-right" onclick="scrollCarousel(1)">&#10095;</span>
+</div>
+
+<!-- Vista previa -->
+<div class="preview" id="preview" onclick="closePreview()">
+    <img id="preview-img" src="" alt="Vista previa">
 </div>
 
 <footer>
@@ -197,8 +224,7 @@ fetch(SHEET_URL)
             const searchText = this.value.toLowerCase();
             const filtered = allItems.filter(item => 
                 item.nombre.toLowerCase().includes(searchText) || 
-                item.descripcion.toLowerCase().includes(searchText) ||
-                (item.descripcion2 && item.descripcion2.toLowerCase().includes(searchText))
+                item.descripcion.toLowerCase().includes(searchText)
             );
             renderItems(filtered);
         });
@@ -212,12 +238,11 @@ function renderItems(items) {
         const card = document.createElement('div');
         card.className = 'card';
         card.innerHTML = `
-            <img src="${item.imagen}" alt="${item.nombre}">
+            <img src="${item.imagen}" alt="${item.nombre}" onclick="openPreview('${item.imagen}')">
             <h3>${item.nombre}</h3>
             <div class="price">$${item.precio}</div>
             <p>${item.descripcion}</p>
-            <p>${item.descripcion2 || ''}</p>
-            <a href="${item.link || MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
+            <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
         `;
         container.appendChild(card);
     });
@@ -228,9 +253,19 @@ function scrollCarousel(direction) {
     const scrollAmount = 270;
     carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
+
+function openPreview(src) {
+    document.getElementById('preview-img').src = src;
+    document.getElementById('preview').style.display = 'flex';
+}
+
+function closePreview() {
+    document.getElementById('preview').style.display = 'none';
+}
 </script>
 </body>
 </html>
+
 
 
 
