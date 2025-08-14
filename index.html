@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENTRETALLES</title>
+<title>ENTRETALLES - Moldería Digital</title>
 <style>
     body { font-family: Arial, sans-serif; margin:0; padding:0; background-color:white; }
     header { background-color:#003366; color:white; text-align:center; padding:20px 0; }
@@ -16,28 +16,65 @@
     .card button:hover { background:#001f4d; }
     footer { background-color:#003366; color:white; text-align:center; padding:20px; }
     .social-icons img { width:30px; margin:0 10px; vertical-align:middle; }
+
+    /* Estilo del popup */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    .popup-content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+    }
+    .popup-content input {
+        width: 90%;
+        padding: 8px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .popup-content button {
+        background: #003366;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 </style>
 </head>
 <body>
 
 <header>
     <h1>ENTRETALLES</h1>
-    <p>Especialistas en moldería digital y física</p>
+    <p>Moldería Digital</p>
 </header>
 
 <nav>
     <a href="entretalles.html">Inicio</a>
 </nav>
 
-<h2>Elegí una opción</h2>
+<h2>Elegí una categoría</h2>
 <div class="categorias">
     <div class="card">
-        <h3>Moldería Digital</h3>
-        <button onclick="location.href='digital.html'">VER</button>
+        <h3>Hombre</h3>
+        <button onclick="location.href='digital-hombre.html'">VER</button>
     </div>
     <div class="card">
-        <h3>Moldería Física</h3>
-        <button onclick="location.href='fisica.html'">VER</button>
+        <h3>Mujer</h3>
+        <button onclick="location.href='digital-mujer.html'">VER</button>
+    </div>
+    <div class="card">
+        <h3>Niños</h3>
+        <button onclick="location.href='digital-ninos.html'">VER</button>
     </div>
 </div>
 
@@ -55,6 +92,46 @@
         </a>
     </div>
 </footer>
+
+<!-- POPUP -->
+<div class="popup" id="popupForm">
+    <div class="popup-content">
+        <h3>Registro</h3>
+        <input type="text" id="nombre" placeholder="Nombre completo">
+        <input type="text" id="telefono" placeholder="Número de teléfono">
+        <input type="email" id="gmail" placeholder="Correo electrónico">
+        <input type="password" id="password" placeholder="Contraseña">
+        <button onclick="guardarDatos()">Guardar</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Mostrar popup solo si no hay datos guardados
+    if (!localStorage.getItem("usuarioNombre")) {
+        document.getElementById("popupForm").style.display = "flex";
+    }
+});
+
+function guardarDatos() {
+    const nombre = document.getElementById("nombre").value;
+    const telefono = document.getElementById("telefono").value;
+    const gmail = document.getElementById("gmail").value;
+    const password = document.getElementById("password").value;
+
+    if (nombre && telefono && gmail && password) {
+        localStorage.setItem("usuarioNombre", nombre);
+        localStorage.setItem("usuarioTelefono", telefono);
+        localStorage.setItem("usuarioGmail", gmail);
+        localStorage.setItem("usuarioPassword", password);
+
+        document.getElementById("popupForm").style.display = "none";
+        alert("Registro completado correctamente.");
+    } else {
+        alert("Por favor complete todos los campos.");
+    }
+}
+</script>
 
 </body>
 </html>
