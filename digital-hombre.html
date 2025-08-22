@@ -9,74 +9,24 @@ body { margin:0; font-family: Arial, sans-serif; background-color:#f7f7f7; }
 header { background-color:#003366; color:white; padding:20px; text-align:center; }
 nav { background-color:#ff1493; padding:10px; text-align:center; }
 nav a { color:white; text-decoration:none; font-weight:bold; margin:0 20px; }
-
-/* Buscador */
-.search-container { text-align:center; margin: 15px 0; }
-.search-container input { padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
-
-/* Contenedor tipo carrusel */
 .carousel-container { position: relative; padding: 20px; overflow: hidden; }
-.carousel { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 10px; }
+.carousel { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; }
 .carousel::-webkit-scrollbar { display: none; }
-
 .card { flex: 0 0 auto; background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); padding:15px; text-align:center; width:250px; }
-.card img { width:250px; height:250px; object-fit:contain; border-radius:5px; background-color:white; cursor:pointer; }
-.card h3 { color:#003366; font-size:1rem; margin:8px 0 6px; }
+.card img { width:250px; height:250px; object-fit:cover; border-radius:5px; cursor:pointer; }
+.card h3 { color:#003366; }
 .price { font-weight:bold; margin:10px 0; }
 .buy-btn { display:inline-block; padding:8px 15px; background-color:#003366; color:white; border-radius:5px; text-decoration:none; margin-top:10px; }
 .buy-btn:hover { background-color:#002244; }
-
-/* Flechas */
 .arrow-btn { position: absolute; top: 50%; transform: translateY(-50%); font-size: 30px; color: #00bfff; background: white; border-radius: 50%; padding: 5px 10px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.3); z-index: 10; }
 .arrow-btn:hover { background: #e6f7ff; }
 .arrow-left { left: 5px; }
 .arrow-right { right: 5px; }
-
 footer { background-color:#003366; color:white; text-align:center; padding:20px; margin-top:40px; }
 .social-icons img { width:30px; margin:0 10px; vertical-align:middle; }
-
-/* Lightbox (preview grande) */
-#lightbox {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.8);
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
-#lightbox .inner {
-  position: relative;
-  max-width: 95%;
-  max-height: 95%;
-}
-#lightbox img {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 8px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-}
-.close-btn {
-  position: absolute;
-  top: -12px;
-  right: -12px;
-  font-size: 28px;
-  color: white;
-  background: rgba(0,0,0,0.4);
-  padding: 6px 10px;
-  border-radius: 6px;
-  text-decoration: none;
-  line-height: 1;
-}
-.close-btn:hover { color: #ff1493; background: rgba(255,255,255,0.08); }
-@media (max-width:600px){
-  .card { width:200px; }
-  .card img { width:200px; height:200px; }
-}
+/* Modal vista previa */
+#modal { display:none; position:fixed; z-index:100; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8); align-items:center; justify-content:center; }
+#modal img { max-width:90%; max-height:90%; border:5px solid white; border-radius:10px; }
 </style>
 </head>
 <body>
@@ -88,130 +38,56 @@ footer { background-color:#003366; color:white; text-align:center; padding:20px;
     <a href="index.html">Inicio</a>
 </nav>
 
-<!-- Buscador -->
-<div class="search-container">
-    <input type="text" id="searchInput" placeholder="Buscar prenda...">
-</div>
-
 <div class="carousel-container">
-    <span class="arrow-btn arrow-left" onclick="scrollCarousel(-1)" aria-hidden="true">&#10094;</span>
-    <div class="carousel" id="products" aria-live="polite"></div>
-    <span class="arrow-btn arrow-right" onclick="scrollCarousel(1)" aria-hidden="true">&#10095;</span>
+    <span class="arrow-btn arrow-left" onclick="scrollCarousel(-1)">&#10094;</span>
+    <div class="carousel" id="products"></div>
+    <span class="arrow-btn arrow-right" onclick="scrollCarousel(1)">&#10095;</span>
 </div>
 
-<!-- Lightbox -->
-<div id="lightbox" role="dialog" aria-hidden="true" tabindex="-1">
-  <div class="inner">
-    <a href="#" class="close-btn" id="lightboxClose" aria-label="Cerrar vista previa">&times;</a>
-    <img id="lightbox-img" src="" alt="Vista previa">
-  </div>
-</div>
+<!-- Modal para vista previa -->
+<div id="modal" onclick="cerrarModal()"><img id="modal-img"></div>
 
 <footer>
     <p>© 2025 Entretalles. Todos los derechos reservados.</p>
     <div class="social-icons">
-        <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"></a>
-        <a href="https://wa.me/541133627786" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
-        <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook"></a>
+        <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"></a>
+        <a href="https://wa.me/541133627786" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"></a>
+        <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg"></a>
     </div>
 </footer>
 
 <script>
-// enlaces y configuración
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv';
+const SHEET_URL = 'TU_LINK_CSV_HOMBRE';
 const MERCADO_PAGO_LINK = 'https://mpago.la/14ApgVg';
 
-// normaliza texto para evitar problemas con tildes/mayúsculas
-function normalizeText(s){ return s? s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase() : ''; }
-
-let allItems = [];
-
-// carga CSV y filtra por categoría 'hombre' (flexible en mayúsculas/acentos)
 fetch(SHEET_URL)
 .then(res => res.text())
 .then(csv => {
     const rows = csv.trim().split('\n').map(r => r.split(','));
-    if(rows.length <= 1) return;
     const headers = rows.shift().map(h => h.trim().toLowerCase());
-    rows.forEach(row => {
-        const item = {};
-        headers.forEach((h,i) => item[h] = row[i] ? row[i].trim() : '');
-        if(normalizeText(item.categoria) === 'hombre') allItems.push(item);
-    });
-    renderItems(allItems);
-    document.getElementById('searchInput').addEventListener('input', function(){
-        const searchText = this.value.toLowerCase();
-        const filtered = allItems.filter(item =>
-            (item.nombre || '').toLowerCase().includes(searchText) ||
-            (item.descripcion || '').toLowerCase().includes(searchText)
-        );
-        renderItems(filtered);
-    });
-})
-.catch(err => {
-    console.error('Error cargando CSV:', err);
-});
-
-function renderItems(items){
     const container = document.getElementById('products');
-    container.innerHTML = '';
-    items.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        // usa item.link si existe, sino MercadoPago general
-        const buyLink = item.link && item.link.trim() ? item.link.trim() : MERCADO_PAGO_LINK;
-        // imagen 250x250 en el card; onclick abre lightbox
-        card.innerHTML = `
-            <img src="${item.imagen || ''}" alt="${(item.nombre||'')}" onclick="openLightbox(this.src)">
-            <h3>${item.nombre || ''}</h3>
-            <div class="price">${item.precio ? '$' + item.precio : ''}</div>
-            <p>${item.descripcion || ''}</p>
-            <a href="${buyLink}" target="_blank" rel="noopener" class="buy-btn">Comprar</a>
-        `;
-        container.appendChild(card);
+    rows.forEach(row => {
+        const item = {}; headers.forEach((h, i) => item[h] = row[i]?row[i].trim():'');
+        if(item.categoria && item.categoria.toLowerCase()==='hombre'){
+            const card = document.createElement('div');
+            card.className='card';
+            card.innerHTML=`
+              <img src="${item.imagen}" alt="${item.nombre}" onclick="abrirModal('${item.imagen}')">
+              <h3>${item.nombre}</h3>
+              <div class="price">$${item.precio}</div>
+              <p>${item.descripcion}</p>
+              <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>`;
+            container.appendChild(card);
+        }
     });
-}
-
-// scroll por flechas
-function scrollCarousel(direction){
-    const carousel = document.getElementById('products');
-    carousel.scrollBy({ left: direction * 270, behavior: 'smooth' });
-}
-
-/* LIGHTBOX */
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
-const lightboxClose = document.getElementById('lightboxClose');
-
-function openLightbox(src){
-    if(!src) return;
-    lightboxImg.src = src;
-    lightbox.style.display = 'flex';
-    lightbox.setAttribute('aria-hidden', 'false');
-    // focus para accesibilidad
-    lightboxClose.focus();
-}
-function closeLightbox(){
-    lightbox.style.display = 'none';
-    lightboxImg.src = '';
-    lightbox.setAttribute('aria-hidden', 'true');
-}
-lightboxClose.addEventListener('click', function(e){ e.preventDefault(); closeLightbox(); });
-
-// cerrar al hacer click fuera de la imagen
-lightbox.addEventListener('click', function(e){
-    if(e.target === lightbox || e.target === lightboxImg.parentElement) closeLightbox();
 });
 
-// cerrar con ESC
-document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape') closeLightbox();
-});
+function scrollCarousel(dir){document.getElementById('products').scrollBy({left:dir*270,behavior:'smooth'});}
+function abrirModal(src){document.getElementById('modal').style.display='flex';document.getElementById('modal-img').src=src;}
+function cerrarModal(){document.getElementById('modal').style.display='none';}
 </script>
 </body>
 </html>
-
-
 
 
 
