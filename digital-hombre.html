@@ -5,35 +5,17 @@
 <title>ENTRETALLES – Hombre</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-:root{
-  --azul1:#0b3b8a;      /* header arriba */
-  --azul2:#3f63c0;      /* header abajo */
-  --rosa:#ff1493;       /* barra navegación */
-  --texto:#ffffff;
-  --azul-boton:#003366; 
-  --azul-boton-hover:#001f4d;
-}
-
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f7f7f7;color:#222}
-
-/* HEADER con gradiente y logo ancho a la izquierda */
+:root{--azul1:#0b3b8a;--azul2:#3f63c0;--rosa:#ff1493;--texto:#ffffff;--azul-boton:#003366;--azul-boton-hover:#001f4d}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f7f7f7;color:#222}
 header{background:linear-gradient(180deg,var(--azul1),var(--azul2));color:var(--texto);padding:22px 16px}
 .header-wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;max-width:1100px;margin:0 auto}
 .logo{justify-self:start;width:160px;height:auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
-.brand{text-align:center}
-.brand h1{margin:0;font-size:34px;letter-spacing:.5px}
-.brand p{margin:4px 0 0}
-
-/* NAV rosa */
+.brand{text-align:center}.brand h1{margin:0;font-size:34px}.brand p{margin:4px 0 0}
 nav{background:var(--rosa);display:flex;justify-content:center;gap:24px;padding:10px 12px}
-nav a{color:#fff;text-decoration:none;font-weight:bold;padding:8px 14px;border-radius:999px;opacity:.95}
-nav a:hover{background:rgba(255,255,255,.18);opacity:1}
-
-/* Buscador + carrusel */
+nav a{color:#fff;text-decoration:none;font-weight:bold;padding:8px 14px;border-radius:999px}
+nav a:hover{background:rgba(255,255,255,.18)}
 .search-container{text-align:center;margin:15px 0}
 .search-container input{padding:8px;width:260px;border:1px solid #ccc;border-radius:6px;font-size:16px}
-
 .carousel-container{position:relative;padding:20px;overflow:hidden}
 .carousel{display:flex;gap:20px;overflow-x:auto;scroll-behavior:smooth}
 .carousel::-webkit-scrollbar{display:none}
@@ -43,53 +25,31 @@ nav a:hover{background:rgba(255,255,255,.18);opacity:1}
 .price{font-weight:bold;margin:8px 0}
 .buy-btn{display:inline-block;padding:8px 15px;background:var(--azul-boton);color:#fff;border-radius:8px;text-decoration:none;margin-top:8px}
 .buy-btn:hover{background:var(--azul-boton-hover)}
-.arrow-btn{position:absolute;top:50%;transform:translateY(-50%);font-size:30px;color:#00bfff;background:#fff;border-radius:50%;padding:5px 10px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,.3);z-index:10}
-.arrow-left{left:5px} .arrow-right{right:5px}
-.arrow-btn:hover{background:#e6f7ff}
-
-/* Lightbox */
 #lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);justify-content:center;align-items:center;z-index:100}
-#lightbox img{max-width:90%;max-height:90%}
-#lightbox:target{display:flex}
-
-/* Footer */
+#lightbox img{max-width:90%;max-height:90%} #lightbox:target{display:flex}
 footer{background:var(--azul1);color:#fff;text-align:center;padding:20px;margin-top:40px}
 .social-icons img{width:30px;margin:0 10px;vertical-align:middle}
-
-/* Responsive */
-@media (max-width:640px){
-  .logo{width:140px}
-  .brand h1{font-size:28px}
-}
+@media (max-width:640px){.logo{width:140px}.brand h1{font-size:28px}}
 </style>
 </head>
 <body>
-
 <header>
   <div class="header-wrap">
     <img class="logo" src="https://i.postimg.cc/852rV0T7/Whats-App-Image-2025-03-26-at-12-46-00.jpg" alt="Logo Entretalles">
-    <div class="brand"><h1>ENTRETALLES</h1><p>Moldería Digital – Hombre</p></div>
-    <div></div>
+    <div class="brand"><h1>ENTRETALLES</h1><p>Moldería Digital – Hombre</p></div><div></div>
   </div>
 </header>
-
 <nav>
-  <a href="index.html">Inicio</a>
-  <a href="digital.html">Digital</a>
+  <a href="/entretalles/index.html">Inicio</a>
+  <a href="/entretalles/digital.html">Digital</a>
 </nav>
 
-<div class="search-container">
-  <input type="text" id="searchInput" placeholder="Buscar prenda...">
-</div>
-
+<div class="search-container"><input type="text" id="searchInput" placeholder="Buscar prenda..."></div>
 <div class="carousel-container">
-  <span class="arrow-btn arrow-left" onclick="scrollCarousel(-1)">&#10094;</span>
   <div class="carousel" id="products"></div>
-  <span class="arrow-btn arrow-right" onclick="scrollCarousel(1)">&#10095;</span>
 </div>
 
-<!-- Lightbox -->
-<div id="lightbox"><img id="lightbox-img" src="" alt="Vista previa"></div>
+<div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
 
 <footer>
   <p>© 2025 Entretalles. Todos los derechos reservados.</p>
@@ -101,63 +61,37 @@ footer{background:var(--azul1);color:#fff;text-align:center;padding:20px;margin-
 </footer>
 
 <script>
-/* Hoja de cálculo HOMBRE (tu link público) */
 const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv';
 const MERCADO_PAGO_LINK='https://mpago.la/14ApgVg';
-
 let allItems=[];
 
-fetch(SHEET_URL)
-  .then(res=>res.text())
-  .then(csv=>{
-    const rows = csv.trim().split('\n').map(r=>r.split(','));
-    const headers = rows.shift().map(h=>h.trim().toLowerCase());
-
-    rows.forEach(row=>{
-      const item={};
-      headers.forEach((h,i)=>item[h]=row[i]?row[i].trim():'');
-      if((item.categoria||'').toLowerCase()==='hombre'){
-        allItems.push(item);
-      }
-    });
-
-    renderItems(allItems);
-
-    // buscador
-    document.getElementById('searchInput').addEventListener('input',function(){
-      const q=this.value.toLowerCase();
-      const filtered = allItems.filter(it=>
-        (it.nombre||'').toLowerCase().includes(q) ||
-        (it.descripcion||'').toLowerCase().includes(q)
-      );
-      renderItems(filtered);
-    });
-  })
-  .catch(err=>console.error('Error cargando productos:',err));
+fetch(SHEET_URL).then(res=>res.text()).then(csv=>{
+  const rows=csv.trim().split('\n').map(r=>r.split(','));
+  const headers=rows.shift().map(h=>h.trim().toLowerCase());
+  rows.forEach(row=>{
+    const item={}; headers.forEach((h,i)=>item[h]=row[i]?row[i].trim():'');
+    if((item.categoria||'').toLowerCase()==='hombre'){ allItems.push(item); }
+  });
+  renderItems(allItems);
+  document.getElementById('searchInput').addEventListener('input',function(){
+    const q=this.value.toLowerCase();
+    renderItems(allItems.filter(it=>(it.nombre||'').toLowerCase().includes(q)||(it.descripcion||'').toLowerCase().includes(q)));
+  });
+}).catch(err=>console.error('Error cargando productos:',err));
 
 function renderItems(items){
-  const container=document.getElementById('products');
-  container.innerHTML='';
+  const container=document.getElementById('products'); container.innerHTML='';
   items.forEach(item=>{
-    const card=document.createElement('div');
-    card.className='card';
-    card.innerHTML = `
-      <img src="${item.imagen||''}" alt="${item.nombre||''}" onclick="showPreview('${(item.imagen||'').replace(/'/g,"\\'")}')">
-      <h3>${item.nombre||''}</h3>
-      <div class="price">$${item.precio||''}</div>
-      <p>${item.descripcion||''}</p>
-      <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>
-    `;
+    const card=document.createElement('div'); card.className='card';
+    card.innerHTML=`<img src="${item.imagen||''}" alt="${item.nombre||''}" onclick="showPreview('${(item.imagen||'').replace(/'/g,"\\'")}')">
+                    <h3>${item.nombre||''}</h3>
+                    <div class="price">$${item.precio||''}</div>
+                    <p>${item.descripcion||''}</p>
+                    <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>`;
     container.appendChild(card);
   });
 }
-function scrollCarousel(direction){
-  document.getElementById('products').scrollBy({left:direction*270,behavior:'smooth'});
-}
-function showPreview(src){
-  document.getElementById('lightbox-img').src=src;
-  location.hash='lightbox';
-}
+function showPreview(src){document.getElementById('lightbox-img').src=src; location.hash='lightbox';}
 </script>
 </body>
 </html>
