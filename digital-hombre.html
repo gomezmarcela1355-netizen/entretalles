@@ -2,98 +2,71 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>ENTRETALLES – Hombre</title>
+<title>ENTRETALLES – HOMBRE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-:root{--azul1:#0b3b8a;--azul2:#3f63c0;--rosa:#ff1493;--texto:#ffffff;--azul-boton:#003366;--azul-boton-hover:#001f4d}
-*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f7f7f7;color:#222}
-header{background:linear-gradient(180deg,var(--azul1),var(--azul2));color:var(--texto);padding:22px 16px}
-.header-wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;max-width:1100px;margin:0 auto}
-.logo{justify-self:start;width:160px;height:auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
-.brand{text-align:center}.brand h1{margin:0;font-size:34px}.brand p{margin:4px 0 0}
-nav{background:var(--rosa);display:flex;justify-content:center;gap:24px;padding:10px 12px}
-nav a{color:#fff;text-decoration:none;font-weight:bold;padding:8px 14px;border-radius:999px}
-nav a:hover{background:rgba(255,255,255,.18)}
-.search-container{text-align:center;margin:15px 0}
-.search-container input{padding:8px;width:260px;border:1px solid #ccc;border-radius:6px;font-size:16px}
-.carousel-container{position:relative;padding:20px;overflow:hidden}
-.carousel{display:flex;gap:20px;overflow-x:auto;scroll-behavior:smooth}
-.carousel::-webkit-scrollbar{display:none}
-.card{flex:0 0 auto;background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);padding:15px;text-align:center;width:250px}
-.card img{width:250px;height:250px;object-fit:contain;background:#fff;border-radius:6px;cursor:pointer}
-.card h3{color:#003366;margin:8px 0 6px}
-.price{font-weight:bold;margin:8px 0}
-.buy-btn{display:inline-block;padding:8px 15px;background:var(--azul-boton);color:#fff;border-radius:8px;text-decoration:none;margin-top:8px}
-.buy-btn:hover{background:var(--azul-boton-hover)}
-#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);justify-content:center;align-items:center;z-index:100}
-#lightbox img{max-width:90%;max-height:90%} #lightbox:target{display:flex}
-footer{background:var(--azul1);color:#fff;text-align:center;padding:20px;margin-top:40px}
-.social-icons img{width:30px;margin:0 10px;vertical-align:middle}
-@media (max-width:640px){.logo{width:140px}.brand h1{font-size:28px}}
+  :root{--azul1:#0b3b8a;--azul2:#3f63c0;--rosa:#ff1493;--azul-boton:#003366}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,Helvetica,sans-serif;background:#fff;color:#222}
+  header{background:linear-gradient(180deg,var(--azul1),var(--azul2));color:#fff;padding:22px 16px}
+  .header-wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;max-width:1100px;margin:0 auto}
+  .logo{justify-self:start;width:160px;height:auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+  .brand{text-align:center}
+  .brand h1{margin:0;font-size:34px}
+  .brand p{margin:4px 0 0}
+  nav{background:var(--rosa);display:flex;justify-content:center;gap:24px;padding:10px 12px}
+  nav a{color:#fff;text-decoration:none;font-weight:bold;padding:8px 14px;border-radius:999px}
+  nav a:hover{background:rgba(255,255,255,.18)}
+  h2{text-align:center;margin:36px 0;color:#0b3b8a}
+  .productos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:1100px;margin:0 auto;padding:0 12px 50px}
+  .card{background:#f7f7f7;padding:15px;text-align:center;border-radius:10px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+  .card img{width:100%;height:auto;border-radius:6px;margin-bottom:8px}
+  .card h3{text-transform:uppercase;color:#003366;margin:8px 0}
+  .price{font-weight:bold;margin:4px 0}
+  footer{background:var(--azul1);color:#fff;text-align:center;padding:18px;margin-top:34px}
+  .social img{width:28px;margin:0 8px;vertical-align:middle}
 </style>
 </head>
 <body>
 <header>
   <div class="header-wrap">
     <img class="logo" src="https://i.postimg.cc/852rV0T7/Whats-App-Image-2025-03-26-at-12-46-00.jpg" alt="Logo Entretalles">
-    <div class="brand"><h1>ENTRETALLES</h1><p>Moldería Digital – Hombre</p></div><div></div>
+    <div class="brand"><h1>ENTRETALLES</h1><p>HOMBRE</p></div>
+    <div></div>
   </div>
 </header>
 <nav>
-  <a href="/entretalles/index.html">Inicio</a>
-  <a href="/entretalles/digital.html">Digital</a>
+  <a href="índice.html">Inicio</a>
+  <a href="digital.html">Digital</a>
 </nav>
-
-<div class="search-container"><input type="text" id="searchInput" placeholder="Buscar prenda..."></div>
-<div class="carousel-container">
-  <div class="carousel" id="products"></div>
-</div>
-
-<div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
-
+<h2>Productos Hombre</h2>
+<div class="productos" id="lista"></div>
 <footer>
   <p>© 2025 Entretalles. Todos los derechos reservados.</p>
-  <div class="social-icons">
-    <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"></a>
-    <a href="https://wa.me/541133627786" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
-    <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook"></a>
+  <div class="social">
+    <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"></a>
+    <a href="https://wa.me/541133627786" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"></a>
+    <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg"></a>
   </div>
 </footer>
-
 <script>
-const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv';
-const MERCADO_PAGO_LINK='https://mpago.la/14ApgVg';
-let allItems=[];
-
-fetch(SHEET_URL).then(res=>res.text()).then(csv=>{
-  const rows=csv.trim().split('\n').map(r=>r.split(','));
-  const headers=rows.shift().map(h=>h.trim().toLowerCase());
-  rows.forEach(row=>{
-    const item={}; headers.forEach((h,i)=>item[h]=row[i]?row[i].trim():'');
-    if((item.categoria||'').toLowerCase()==='hombre'){ allItems.push(item); }
+fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv')
+  .then(res=>res.text()).then(text=>{
+    const rows=text.trim().split('\n').slice(1);
+    const cont=document.getElementById('lista');
+    rows.forEach(row=>{
+      const [nombre,cat,img,precio,desc]=row.split(',');
+      if(nombre && img){
+        cont.innerHTML+=`
+          <div class="card">
+            <img src="${img}" alt="${nombre}">
+            <h3>${nombre}</h3>
+            <div class="price">$${precio}</div>
+            <p>${desc}</p>
+          </div>`;
+      }
+    });
   });
-  renderItems(allItems);
-  document.getElementById('searchInput').addEventListener('input',function(){
-    const q=this.value.toLowerCase();
-    renderItems(allItems.filter(it=>(it.nombre||'').toLowerCase().includes(q)||(it.descripcion||'').toLowerCase().includes(q)));
-  });
-}).catch(err=>console.error('Error cargando productos:',err));
-
-function renderItems(items){
-  const container=document.getElementById('products'); container.innerHTML='';
-  items.forEach(item=>{
-    const card=document.createElement('div'); card.className='card';
-    card.innerHTML=`<img src="${item.imagen||''}" alt="${item.nombre||''}" onclick="showPreview('${(item.imagen||'').replace(/'/g,"\\'")}')">
-                    <h3>${item.nombre||''}</h3>
-                    <div class="price">$${item.precio||''}</div>
-                    <p>${item.descripcion||''}</p>
-                    <a href="${MERCADO_PAGO_LINK}" target="_blank" class="buy-btn">Comprar</a>`;
-    container.appendChild(card);
-  });
-}
-function showPreview(src){document.getElementById('lightbox-img').src=src; location.hash='lightbox';}
 </script>
 </body>
 </html>
-
-
