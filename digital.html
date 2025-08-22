@@ -2,27 +2,22 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<title>ENTRETALLES – Inicio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENTRETALLES - Moldería Digital</title>
 <style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background-color:white; }
-  header { background-color:#003366; color:white; padding:20px; }
+  body { margin:0; font-family: Arial, sans-serif; background:#fff; }
+  header { background:#003366; color:#fff; padding:20px; }
   .header-container { display:flex; align-items:center; gap:15px; justify-content:center; }
   .logo { width:60px; height:auto; border-radius:8px; }
   .header-text h1 { margin:0; }
   .header-text p { margin:0; }
-
-  nav { background-color:#ff1493; text-align:center; padding:10px 0; }
-  nav a { color:white; text-decoration:none; font-weight:bold; padding:10px 20px; }
-
-  h2 { text-align:center; margin:30px 0; color:#003366; }
-  .categorias { display:flex; justify-content:center; flex-wrap:wrap; gap:20px; margin-bottom:50px; }
-  .card { background:#f7f7f7; padding:20px; text-align:center; border-radius:10px; width:200px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
-  .card h3 { margin-bottom:10px; color:#003366; }
-  .card button { background:#003366; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer; }
+  h2 { text-align:center; margin:40px 0 20px; color:#003366; }
+  .opciones { display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin-bottom:50px; }
+  .card { background:#f7f7f7; padding:30px; text-align:center; border-radius:10px; width:220px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+  .card h3 { margin:0 0 15px; color:#003366; }
+  .card button { background:#003366; color:#fff; padding:10px 20px; border:none; border-radius:5px; cursor:pointer; font-size:16px; }
   .card button:hover { background:#001f4d; }
-
-  footer { background-color:#003366; color:white; text-align:center; padding:20px; }
+  footer { background:#003366; color:#fff; text-align:center; padding:20px; margin-top:40px; }
   .social-icons img { width:30px; margin:0 10px; vertical-align:middle; }
 </style>
 </head>
@@ -33,28 +28,21 @@
     <img src="https://i.postimg.cc/852rV0T7/Whats-App-Image-2025-03-26-at-12-46-00.jpg" alt="Logo Entretalles" class="logo">
     <div class="header-text">
       <h1>ENTRETALLES</h1>
-      <p>Moldería Digital</p>
+      <p>Bienvenidos</p>
     </div>
   </div>
 </header>
 
-<nav>
-  <a href="index.html">Inicio</a>
-</nav>
-
-<h2>Elegí una categoría</h2>
-<div class="categorias">
+<h2>Elegí una opción</h2>
+<div class="opciones">
   <div class="card">
-    <h3>Hombre</h3>
-    <button onclick="location.href='hombre-digital.html'">VER</button>
+    <h3>Moldería Digital</h3>
+    <!-- Va a la página con Hombre/Mujer/Niños -->
+    <button onclick="location.href='categorias-digital.html'">INGRESAR</button>
   </div>
   <div class="card">
-    <h3>Mujer</h3>
-    <button onclick="location.href='mujer-digital.html'">VER</button>
-  </div>
-  <div class="card">
-    <h3>Niños</h3>
-    <button onclick="location.href='niños-digitales.html'">VER</button>
+    <h3>Moldería Física</h3>
+    <button onclick="location.href='fisica.html'">INGRESAR</button>
   </div>
 </div>
 
@@ -75,7 +63,4 @@
 
 </body>
 </html>
-
-
-
 
