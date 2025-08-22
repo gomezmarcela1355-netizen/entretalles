@@ -69,7 +69,7 @@ footer{background:var(--azul1);color:#fff;text-align:center;padding:20px;margin-
 </header>
 
 <nav>
-  <a href="index.html">Inicio</a>
+  <a href="índice.html">Inicio</a>
   <a href="digital.html">Digital</a>
 </nav>
 
@@ -96,6 +96,7 @@ footer{background:var(--azul1);color:#fff;text-align:center;padding:20px;margin-
 </footer>
 
 <script>
+/* Hoja de cálculo HOMBRE (la tuya) */
 const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv';
 const MERCADO_PAGO_LINK='https://mpago.la/14ApgVg';
 
@@ -140,8 +141,13 @@ function renderItems(items){
   });
 }
 
-function scrollCarousel(d){document.getElementById('products').scrollBy({left:d*270,behavior:'smooth'});}
-function showPreview(src){document.getElementById('lightbox-img').src=src; location.hash='lightbox';}
+function scrollCarousel(direction){
+  document.getElementById('products').scrollBy({left:direction*270,behavior:'smooth'});
+}
+function showPreview(src){
+  document.getElementById('lightbox-img').src=src;
+  location.hash='lightbox';
+}
 </script>
 </body>
 </html>
