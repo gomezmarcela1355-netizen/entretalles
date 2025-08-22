@@ -6,7 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   body { margin:0; font-family: Arial, sans-serif; background-color:white; }
-  header { background-color:#003366; color:white; text-align:center; padding:20px; }
+  header { background-color:#003366; color:white; padding:20px; }
+  .header-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center; /* centra todo el contenido */
+  }
+  .logo {
+    width:60px; /* ajusta el tamaño de tu logo según se vea bien */
+    height:auto;
+    border-radius:8px; /* opcional, para bordes suavizados */
+  }
+  .header-text h1 { margin:0; }
+  .header-text p { margin:0; }
   nav { background-color:#ff1493; text-align:center; padding:10px; }
   nav a { color:white; text-decoration:none; font-weight:bold; padding:10px 20px; }
   h2 { text-align:center; margin:30px 0; }
@@ -22,8 +35,13 @@
 <body>
 
 <header>
-  <h1>ENTRETALLES</h1>
-  <p>Moldería Digital</p>
+  <div class="header-container">
+    <img src="https://i.postimg.cc/852rV0T7/Whats-App-Image-2025-03-26-at-12-46-00.jpg" alt="Logo Entretalles" class="logo">
+    <div class="header-text">
+      <h1>ENTRETALLES</h1>
+      <p>Moldería Digital</p>
+    </div>
+  </div>
 </header>
 
 <nav>
