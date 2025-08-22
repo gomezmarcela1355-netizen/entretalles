@@ -1,55 +1,145 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>ENTRETALLES – Inicio</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <style>
-  body { margin:0; font-family: Arial, sans-serif; background:#fff; }
-  header { background:#003366; color:#fff; padding:20px; }
-  .header-container { display:flex; align-items:center; gap:15px; justify-content:center; }
-  .logo { width:60px; height:auto; border-radius:8px; }
-  .header-text h1 { margin:0; }
-  .header-text p { margin:0; }
-  h2 { text-align:center; margin:40px 0 20px; color:#003366; }
-  .opciones { display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin-bottom:50px; }
-  .card { background:#f7f7f7; padding:30px; text-align:center; border-radius:10px; width:220px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
-  .card h3 { margin:0 0 15px; color:#003366; }
-  .card button { background:#003366; color:#fff; padding:10px 20px; border:none; border-radius:5px; cursor:pointer; font-size:16px; }
-  .card button:hover { background:#001f4d; }
-  footer { background:#003366; color:#fff; text-align:center; padding:20px; margin-top:40px; }
-  .social-icons img { width:30px; margin:0 10px; vertical-align:middle; }
+  :root{
+    --azul1:#0b3b8a;      /* azul oscuro (arriba) */
+    --azul2:#3f63c0;      /* azul medio (abajo) */
+    --rosa:#ff1493;       /* barra de navegación */
+    --texto:#ffffff;
+    --gris-card:#f1f3f6;
+    --azul-boton:#003366;
+    --azul-boton-hover:#001f4d;
+  }
+
+  /* Reset básico */
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#222}
+
+  /* HEADER con gradiente y logo grande a la izquierda */
+  header{
+    background: linear-gradient(180deg, var(--azul1), var(--azul2));
+    color:var(--texto);
+    padding:22px 16px;
+  }
+  .header-wrap{
+    display:grid;
+    grid-template-columns: 1fr auto 1fr; /* izq-centro-der (centra el título) */
+    align-items:center;
+    gap:12px;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .logo{
+    justify-self:start;
+    width:160px;           /* MÁS ANCHO para que se note */
+    height:auto;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.25);
+  }
+  .brand{
+    text-align:center;
+  }
+  .brand h1{margin:0;font-size:34px;letter-spacing:.5px}
+  .brand p{margin:4px 0 0;font-size:15px;opacity:.95}
+
+  /* NAV rosa tipo pestañas */
+  nav{
+    background:var(--rosa);
+    display:flex;
+    justify-content:center;
+    gap:24px;
+    padding:10px 12px;
+  }
+  nav a{
+    color:#fff;text-decoration:none;font-weight:bold;
+    padding:8px 14px;border-radius:999px;opacity:.95
+  }
+  nav a:hover{background:rgba(255,255,255,.18);opacity:1}
+
+  /* Tarjetas de selección */
+  h2{text-align:center;margin:36px 0 18px;color:var(--azul1)}
+  .opciones{
+    display:flex;flex-wrap:wrap;gap:28px;justify-content:center;margin:0 auto 56px;
+    max-width:1100px;padding:0 12px;
+  }
+  .card{
+    width:min(360px, 90vw);
+    background:linear-gradient(180deg,#ffffff,#fafbff);
+    border-radius:14px;
+    padding:26px 24px;
+    box-shadow:0 6px 24px rgba(11,59,138,.18);
+    border:1px solid #e8ecf5;
+    text-align:center;
+  }
+  .card h3{margin:0 0 8px;color:var(--azul1);font-size:22px}
+  .card p{margin:0 0 18px;color:#4a5568;font-size:14.5px}
+  .card button{
+    background:var(--azul-boton);color:#fff;border:0;border-radius:8px;
+    padding:10px 18px;font-weight:bold;cursor:pointer
+  }
+  .card button:hover{background:var(--azul-boton-hover)}
+
+  /* Footer */
+  footer{
+    background:var(--azul1);color:#fff;text-align:center;padding:18px;margin-top:34px
+  }
+  .social img{width:28px;margin:0 8px;vertical-align:middle}
+
+  /* Responsive: en móviles el logo reduce un poco pero sigue ancho */
+  @media (max-width:640px){
+    .logo{width:140px}
+    .brand h1{font-size:28px}
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="header-container">
-    <img src="https://i.postimg.cc/852rV0T7/Whats-App-Image-2025-03-26-at-12-46-00.jpg" alt="Logo Entretalles" class="logo">
-    <div class="header-text">
+  <div class="header-wrap">
+    <!-- LOGO ANCHO A LA IZQUIERDA -->
+    <img class="logo"
+         src="https://i.postimg.cc/852rV0T7/Whats-App-Image-2025-03-26-at-12-46-00.jpg"
+         alt="Logo Entretalles">
+
+    <!-- Título centrado -->
+    <div class="brand">
       <h1>ENTRETALLES</h1>
-      <p>Bienvenidos</p>
+      <p>Moldería Digital y Física</p>
     </div>
+
+    <!-- Columna derecha vacía para mantener el centrado -->
+    <div></div>
   </div>
 </header>
+
+<nav>
+  <a href="#">Inicio</a>
+  <a href="#nosotros">Nosotros</a>
+  <a href="#contacto">Contacto</a>
+</nav>
 
 <h2>Elegí una opción</h2>
 <div class="opciones">
   <div class="card">
     <h3>Moldería Digital</h3>
-    <!-- Este botón va a la página de Hombre/Mujer/Niños -->
-    <button onclick="location.href='digital.html'">INGRESAR</button>
+    <p>Descubrí nuestros moldes digitales listos para descargar.</p>
+    <button onclick="location.href='digital.html'">VER</button>
   </div>
+
   <div class="card">
     <h3>Moldería Física</h3>
-    <!-- Este botón va a la página de Moldería Física -->
-    <button onclick="location.href='fisica.html'">INGRESAR</button>
+    <p>Explorá los moldes físicos listos para cortar y coser.</p>
+    <button onclick="location.href='fisica.html'">VER</button>
   </div>
 </div>
 
 <footer>
   <p>© 2025 Entretalles. Todos los derechos reservados.</p>
-  <div class="social-icons">
+  <div class="social">
     <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank" rel="noopener">
       <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
     </a>
@@ -62,7 +152,19 @@
   </div>
 </footer>
 
+<!-- Secciones de ejemplo para los links del menú -->
+<section id="nosotros" style="max-width:900px;margin:0 auto 24px;padding:0 12px;color:#4a5568;">
+  <h2 style="text-align:center;color:var(--azul1);">Nosotros</h2>
+  <p style="text-align:center;">Diseñamos y vendemos moldería de calidad para todas las tallas.</p>
+</section>
+
+<section id="contacto" style="max-width:900px;margin:0 auto 48px;padding:0 12px;color:#4a5568;">
+  <h2 style="text-align:center;color:var(--azul1);">Contacto</h2>
+  <p style="text-align:center;">Email: gomezmarcela1355@gmail.com · Tel: 11 3362 7786</p>
+</section>
+
 </body>
 </html>
+
 
 
