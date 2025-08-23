@@ -5,83 +5,123 @@
 <title>ENTRETALLES – Inicio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <style>
-  :root{ --azul1:#0b3b8a; --azul2:#3f63c0; --rosa:#ff1493; --texto:#ffffff; --azul-boton:#003366; }
+  :root{
+    --azul-top:#1e4aa3;        /* parte alta del header */
+    --azul-bottom:#315ec9;     /* parte baja del header */
+    --rosa:#ff1493;            /* barra de navegación */
+    --azul-btn:#0b2f6b;        /* botón VER */
+    --azul-footer:#0d3385;     /* footer sólido */
+    --txt:#ffffff;
+  }
   *{box-sizing:border-box}
-  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#222}
-
-  /* HEADER (gradiente + logo) */
-  header{background:linear-gradient(180deg,var(--azul1),var(--azul2));color:var(--texto);padding:22px 16px}
-  .header-wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;max-width:1100px;margin:0 auto}
-  .logo{justify-self:start;width:160px;height:auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#113}
+  /* Header */
+  header{
+    background:linear-gradient(180deg,var(--azul-top),var(--azul-bottom));
+    color:var(--txt); padding:24px 16px 28px;
+  }
+  .header-wrap{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:180px 1fr; gap:16px; align-items:center;
+  }
+  .logo{
+    width:150px; height:auto; border-radius:10px; background:#fff;
+    padding:18px; box-shadow:0 3px 10px rgba(0,0,0,.25);
+  }
   .brand{text-align:center}
-  .brand h1{margin:0;font-size:34px}
-  .brand p{margin:4px 0 0}
+  .brand h1{margin:0 0 6px; font-size:36px; letter-spacing:.5px}
+  .brand p{margin:0; opacity:.95}
 
-  /* NAV rosa */
-  nav{background:var(--rosa);display:flex;justify-content:center;gap:24px;padding:10px 12px}
-  nav a{color:#fff;text-decoration:none;font-weight:bold;padding:8px 14px;border-radius:999px;opacity:.95}
-  nav a:hover{background:rgba(255,255,255,.18);opacity:1}
+  /* Nav rosa */
+  nav{
+    background:var(--rosa); display:flex; justify-content:center;
+    gap:28px; padding:10px 12px; font-weight:bold;
+  }
+  nav a{
+    color:#fff; text-decoration:none; padding:8px 14px; border-radius:999px;
+  }
+  nav a:hover{background:rgba(255,255,255,.18)}
 
-  /* Tarjetas */
-  h2{text-align:center;margin:36px 0 18px;color:#0b3b8a}
-  .opciones{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;max-width:1100px;margin:0 auto 56px;padding:0 12px}
-  .card{width:min(360px,90vw);background:#f7f7f7;border-radius:12px;padding:26px 24px;box-shadow:0 2px 6px rgba(0,0,0,.10);text-align:center}
-  .card h3{margin:0 0 8px;color:#003366;font-size:22px;text-transform:uppercase}
-  .card p{margin:0 0 18px;color:#4a5568;font-size:14.5px}
-  .card a{display:inline-block;background:var(--azul-boton);color:#fff;border:0;border-radius:8px;padding:10px 18px;font-weight:bold;text-decoration:none}
+  /* Contenido principal */
+  main{max-width:1080px; margin:28px auto 56px; padding:0 16px}
+  h2{color:#173b92; text-align:center; margin:0 0 24px; font-size:26px}
+
+  .grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:28px; align-items:stretch;
+  }
+  .card{
+    background:#f6f7fb; border-radius:14px; padding:26px 24px; text-align:center;
+    box-shadow:0 6px 20px rgba(0,0,0,.12);
+  }
+  .card h3{
+    color:#113a7a; margin:0 0 8px; font-size:22px; letter-spacing:.3px;
+  }
+  .card p{color:#3d4c66; margin:0 0 18px; line-height:1.35}
+  .btn{
+    display:inline-block; background:var(--azul-btn); color:#fff;
+    padding:10px 22px; border-radius:8px; text-decoration:none; font-weight:bold;
+  }
+  /* NO cambia de color al hover */
+  .btn:hover{filter:brightness(1)}
 
   /* Footer */
-  footer{background:var(--azul1);color:#fff;text-align:center;padding:18px;margin-top:34px}
-  .social img{width:28px;margin:0 8px;vertical-align:middle}
-
-  @media (max-width:640px){.logo{width:140px}.brand h1{font-size:28px}}
+  footer{
+    background:var(--azul-footer); color:#fff; text-align:center; padding:22px 16px;
+  }
+  .social img{width:28px; margin:0 8px; vertical-align:middle}
 </style>
 </head>
 <body>
 
 <header>
   <div class="header-wrap">
+    <!-- Logo a la izquierda -->
     <img class="logo" src="https://i.postimg.cc/852rV0T7/Whats-App-Image-2025-03-26-at-12-46-00.jpg" alt="Logo Entretalles">
+    <!-- Marca centrada -->
     <div class="brand">
       <h1>ENTRETALLES</h1>
       <p>Moldería Digital y Física</p>
     </div>
-    <div></div>
   </div>
 </header>
 
 <nav>
-  <!-- SIEMPRE usar index.html como inicio -->
   <a href="index.html">Inicio</a>
   <a href="digital.html">Digital</a>
   <a href="fisica.html">Física</a>
 </nav>
 
-<h2>Elegí una opción</h2>
-<div class="opciones">
-  <div class="card">
-    <h3>MOLDERÍA DIGITAL</h3>
-    <p>Descubrí nuestros moldes digitales listos para descargar.</p>
-    <a href="digital.html">VER</a>
-  </div>
-  <div class="card">
-    <h3>MOLDERÍA FÍSICA</h3>
-    <p>Explorá los moldes físicos listos para cortar y coser.</p>
-    <a href="fisica.html">VER</a>
-  </div>
-</div>
+<main>
+  <h2>Elegí una opción</h2>
+
+  <section class="grid">
+    <article class="card">
+      <h3>MOLDERÍA DIGITAL</h3>
+      <p>Descubrí nuestros moldes digitales listos para descargar.</p>
+      <a class="btn" href="digital.html">VER</a>
+    </article>
+
+    <article class="card">
+      <h3>MOLDERÍA FÍSICA</h3>
+      <p>Explorá los moldes físicos listos para cortar y coser.</p>
+      <a class="btn" href="fisica.html">VER</a>
+    </article>
+  </section>
+</main>
 
 <footer>
   <p>© 2025 Entretalles. Todos los derechos reservados.</p>
   <div class="social">
-    <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"></a>
-    <a href="https://wa.me/541133627786" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
-    <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook"></a>
+    <a href="https://www.instagram.com/mgconfecciones.arg/" target="_blank" rel="noopener">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"></a>
+    <a href="https://wa.me/541133627786" target="_blank" rel="noopener">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
+    <a href="https://www.facebook.com/share/17EgVid4V9/?mibextid=wwXIfr" target="_blank" rel="noopener">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook"></a>
   </div>
 </footer>
 
 </body>
 </html>
-
-
 
