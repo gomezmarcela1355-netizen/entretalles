@@ -5,61 +5,43 @@
 <title>ENTRETALLES – NIÑOS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-:root{
-  --azul-top:#1e4aa3; --azul-bottom:#315ec9; --rosa:#ff1493; --txt:#ffffff;
-  --azul-btn:#0b2f6b; --azul-footer:#0d3385;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#113}
-
-/* Header (igual index) */
+:root{ --azul-top:#1e4aa3; --azul-bottom:#315ec9; --rosa:#ff1493; --txt:#ffffff; --azul-btn:#0b2f6b; --azul-footer:#0d3385; }
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#113}
 header{background:linear-gradient(180deg,var(--azul-top),var(--azul-bottom));color:var(--txt);padding:24px 16px 28px}
 .header-wrap{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:180px 1fr;gap:16px;align-items:center}
 .logo{width:150px;height:auto;border-radius:10px;background:#fff;padding:18px;box-shadow:0 3px 10px rgba(0,0,0,.25)}
 .brand{text-align:center}.brand h1{margin:0 0 6px;font-size:36px}.brand p{margin:0;opacity:.95}
-
-/* Nav rosa */
-nav{background:var(--rosa);display:flex;justify-content:center;gap:28px;padding:10px 12px;font-weight:bold}
+nav{background:var(--rosa);display:flex;justify-content:center;gap:28px;padding:10px 12px;font-weight:bold;position:relative}
 nav a{color:#fff;text-decoration:none;padding:8px 14px;border-radius:999px}
 nav a:hover{background:rgba(255,255,255,.18)}
+#cart-count{display:none; position:absolute; top:-6px; right:-10px; background:#fff; color:#d6006e; border-radius:999px; padding:2px 6px; font-size:12px; font-weight:bold}
 
-/* Buscador */
 .search{max-width:1200px;margin:16px auto 0;padding:0 16px;text-align:center}
 .search input{width:300px;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:16px}
 
-/* Carrusel */
 .carousel-shell{max-width:1400px;margin:18px auto 56px;position:relative}
 .track{display:flex;gap:24px;overflow-x:auto;scroll-behavior:smooth;padding:6px 16px}
 .track::-webkit-scrollbar{display:none}
 
-/* Tarjetas grandes */
 .card{flex:0 0 auto;width:340px;background:#f6f7fb;border-radius:14px;padding:16px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.12)}
 .card img{width:100%;height:360px;object-fit:contain;background:#fff;border-radius:10px;cursor:pointer}
 .card h3{margin:12px 0 6px;color:#113a7a;text-transform:uppercase;font-size:17px}
 .price{font-weight:bold;margin:4px 0}
-.buy{display:inline-block;background:var(--azul-btn);color:#fff;padding:10px 16px;border-radius:9px;text-decoration:none;font-weight:bold}
+.actions{display:flex;gap:8px;justify-content:center;margin-top:8px;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--azul-btn);color:#fff;padding:10px 16px;border-radius:9px;text-decoration:none;font-weight:bold;border:0;cursor:pointer}
 
-/* Flechas pegadas a bordes de pantalla */
 .arrow{position:fixed;top:50%;transform:translateY(-50%);font-size:36px;background:#fff;color:#315ec9;border-radius:50%;padding:8px 12px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.3);z-index:1000;user-select:none}
 .arrow:hover{background:#e6f7ff}
 .arrow-left{left:8px} .arrow-right{right:8px}
 
-/* Lightbox */
 #lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);justify-content:center;align-items:center;z-index:1200}
 #lightbox img{max-width:92%;max-height:92%}
 #lightbox:target{display:flex}
 
-/* Footer */
 footer{background:var(--azul-footer);color:#fff;text-align:center;padding:22px 16px}
 .social img{width:28px;margin:0 8px;vertical-align:middle}
 
-/* Responsive */
-@media (max-width:640px){
-  .logo{width:140px}
-  .brand h1{font-size:28px}
-  .card{width:300px}
-  .card img{height:320px}
-}
+@media (max-width:640px){ .logo{width:140px} .brand h1{font-size:28px} .card{width:300px} .card img{height:320px} }
 </style>
 </head>
 <body>
@@ -73,11 +55,11 @@ footer{background:var(--azul-footer);color:#fff;text-align:center;padding:22px 1
 <nav>
   <a href="index.html">Inicio</a>
   <a href="digital.html">Digital</a>
+  <a href="cart.html" style="position:relative">🛒 Carrito <span id="cart-count">0</span></a>
 </nav>
 
 <div class="search"><input id="q" type="text" placeholder="Buscar prenda..."></div>
 
-<!-- Flechas -->
 <span class="arrow arrow-left" onclick="scrollTrack(-1)">&#10094;</span>
 <span class="arrow arrow-right" onclick="scrollTrack(1)">&#10095;</span>
 
@@ -85,7 +67,6 @@ footer{background:var(--azul-footer);color:#fff;text-align:center;padding:22px 1
   <div id="track" class="track"></div>
 </section>
 
-<!-- Lightbox -->
 <div id="lightbox" onclick="closeLightbox(event)">
   <img id="zoom" alt="Vista previa" />
 </div>
@@ -99,20 +80,19 @@ footer{background:var(--azul-footer);color:#fff;text-align:center;padding:22px 1
   </div>
 </footer>
 
+<script src="cart.js"></script>
 <script>
-/* Hoja de cálculo NIÑOS */
 const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vT2pGJPY3fyOiaSeicE7bKk3TqW4uKZaZeznY_mX31fNzgXpjcxUivyuHoMDTZNjrTSnNbTknRZ966y/pub?gid=0&single=true&output=csv';
 const MP_LINK='https://mpago.la/14ApgVg';
-const norm = s => (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); // niños -> ninos
-
+const norm = s => (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); // niños/ninos/ninios
 let items=[];
 fetch(SHEET_URL).then(r=>r.text()).then(csv=>{
   const rows=csv.trim().split('\n').map(r=>r.split(','));
   const headers=rows.shift().map(h=>h.trim().toLowerCase());
   rows.forEach(row=>{
     const o={}; headers.forEach((h,i)=>o[h]=(row[i]||'').trim());
-    const cat = norm(o.categoria);
-    if(cat==='ninos' || cat==='ninios'){ items.push(o); } // acepta niños/ninos/ninios
+    const cat=norm(o.categoria);
+    if(cat==='ninos' || cat==='ninios') items.push(o);
   });
   render(items);
   document.getElementById('q').addEventListener('input',e=>{
@@ -130,15 +110,21 @@ function render(arr){
         <h3>${x.nombre||''}</h3>
         <div class="price">$${x.precio||''}</div>
         <p>${x.descripcion||''}</p>
-        <a class="buy" href="${MP_LINK}" target="_blank">Comprar</a>
+        <div class="actions">
+          <a class="btn" href="${MP_LINK}" target="_blank">Comprar</a>
+          <button class="btn" onclick='EntretallesCart.add({
+            categoria:"Niños",
+            nombre:${JSON.stringify(x.nombre||'')},
+            precio:${JSON.stringify(x.precio||'')},
+            imagen:${JSON.stringify(x.imagen||'')}
+          })'>Agregar al carrito</button>
+        </div>
       </div>
     `);
   });
+  EntretallesCart.updateBadge();
 }
-
 function scrollTrack(dir){ document.getElementById('track').scrollBy({left:dir*360,behavior:'smooth'}); }
-
-/* Lightbox */
 function openLightbox(src){ document.getElementById('zoom').src=src; location.hash='lightbox'; }
 function closeLightbox(e){ if(e.target.id==='lightbox'){ location.hash=''; } }
 </script>
