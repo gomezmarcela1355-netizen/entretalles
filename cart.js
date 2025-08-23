@@ -1,13 +1,14 @@
-<!-- cart.js -->
-<script>
+// cart.js (sin <script> en el archivo)
 (()=> {
   const KEY = 'entretalles_cart_v1';
+
   const read = () => JSON.parse(localStorage.getItem(KEY) || '[]');
   const write = (data) => localStorage.setItem(KEY, JSON.stringify(data));
   const currency = (n) => {
     const v = isNaN(n)? 0 : Number(n);
     return new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(v);
   };
+
   const cart = {
     all: () => read(),
     count: () => read().reduce((s,i)=>s+i.qty,0),
@@ -18,7 +19,9 @@
       const obj = { id, nombre:item.nombre, precio, imagen:item.imagen||'', categoria:item.categoria||'', qty: Number(item.qty||1) };
       const data = read(); const idx = data.findIndex(x=>x.id===id);
       if(idx>-1){ data[idx].qty += obj.qty; } else { data.push(obj); }
-      write(data); cart.updateBadge(); return obj;
+      write(data);
+      cart.updateBadge();
+      return obj;
     },
     remove: (id) => { write(read().filter(x=>x.id!==id)); cart.updateBadge(); },
     setQty: (id, qty) => {
@@ -29,7 +32,11 @@
     clear: ()=>{ write([]); cart.updateBadge(); },
     updateBadge: ()=>{
       const el = document.getElementById('cart-count');
-      if(el){ el.textContent = cart.count(); el.style.display = cart.count()>0 ? 'inline-block':'none'; }
+      if(el){
+        const c = cart.count();
+        el.textContent = c;
+        el.style.display = c>0 ? 'inline-block':'none';
+      }
     },
     format: currency,
     whatsappText: ()=>{
@@ -40,7 +47,7 @@
       return encodeURIComponent(lines.join('\n'));
     }
   };
+
   window.EntretallesCart = cart;
   document.addEventListener('DOMContentLoaded', cart.updateBadge);
 })();
-</script>
