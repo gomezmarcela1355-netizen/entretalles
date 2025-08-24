@@ -5,7 +5,6 @@
 <title>ENTRETALLES – MOLDERÍA DIGITAL NIÑOS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <style>
-/* mismos estilos que hombre-digital */
 :root{--azul-top:#1e4aa3;--azul-bottom:#315ec9;--rosa:#ff1493;--txt:#ffffff;--azul-btn:#0b2f6b;--azul-btn-2:#163f92;--azul-footer:#0d3385;--shadow:0 8px 24px rgba(0,0,0,.12)}
 *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#113}
 header{background:linear-gradient(180deg,var(--azul-top),var(--azul-bottom));color:var(--txt);padding:24px 16px 28px}
@@ -72,7 +71,7 @@ footer{background:var(--azul-footer);color:#fff;text-align:center;padding:22px 1
   </div>
 </footer>
 
-<!-- Modal Mi cuenta (igual) -->
+<!-- Modal Mi cuenta -->
 <div class="modal-backdrop" id="buyerModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2000;align-items:center;justify-content:center;padding:16px">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="buyerTitle" style="width:100%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 12px 34px rgba(0,0,0,.25);overflow:hidden">
     <header style="background:linear-gradient(180deg,#1e4aa3,#315ec9);color:#fff;padding:14px 16px"><h3 id="buyerTitle" style="margin:0">Datos del comprador</h3></header>
@@ -113,6 +112,7 @@ saveBuyer?.addEventListener('click', ()=>{ const data={name:nameInput.value.trim
 
 /* Hoja NIÑOS Digital */
 const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vT2pGJPY3fyOiaSeicE7bKk3TqW4uKZaZeznY_mX31fNzgXpjcxUivyuHoMDTZNjrTSnNbTknRZ966y/pub?gid=0&single=true&output=csv';
+
 function parseCSV(t){const R=[];let r=[],v='',q=false;for(let i=0;i<t.length;i++){const c=t[i],n=t[i+1];if(c==='\"'){if(q&&n==='\"'){v+='\"';i++;}else q=!q;}else if(c===','&&!q){r.push(v);v='';}else if((c==='\n'||c==='\r')&&!q){if(v!==''||r.length){r.push(v);R.push(r);r=[];v='';}}else v+=c;}if(v!==''||r.length){r.push(v);R.push(r);}return R;}
 
 let ALL=[];
@@ -135,7 +135,8 @@ fetch(SHEET_URL).then(r=>r.text()).then(txt=>{
 function render(list){
   const box=document.getElementById('products'); box.innerHTML='';
   list.forEach(it=>{
-    const itemForCart={name:it.nombre||'', price:parseFloat((it.precio||'0').toString().replace('.','').replace(',','.'))||0, image:it.imagen||'', category:'Digital • Niños'};
+    const priceNum = Number(String(it.precio||'0').replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',', '.')) || 0;
+    const itemForCart = { name:it.nombre||'', price:priceNum, image:it.imagen||'', category:'Digital • Niños' };
     const card=document.createElement('div'); card.className='card';
     card.innerHTML=`
       <img src="${it.imagen||''}" alt="${it.nombre||''}" onclick="openLightbox('${(it.imagen||'').replace(/'/g,"\\'")}')">
@@ -153,6 +154,37 @@ function render(list){
 function scrollCarousel(d){document.getElementById('products').scrollBy({left:d*(360+28),behavior:'smooth'});}
 function openLightbox(src){document.getElementById('lightbox-img').src=src; location.hash='lightbox';}
 </script>
+
+<!-- Puente compatibilidad -->
+<script>
+(function(){
+  const KEY = 'entretalles_cart';
+  function getCart(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ return []; } }
+  function setCart(c){ localStorage.setItem(KEY, JSON.stringify(c||[])); }
+  function priceToNumber(p){ if(typeof p==='number') return p; return Number(String(p||'0').replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',', '.')) || 0; }
+  const prevAdd = window.addToCart;
+  window.addToCart = function(item){
+    try{
+      const it = Object.assign({}, item||{});
+      it.name  = it.name  || it.nombre || '';
+      it.image = it.image || it.imagen || '';
+      it.price = priceToNumber(it.price ?? it.precio);
+      it.qty   = Number(it.qty||1);
+      it.category = it.category || it.categoria || '';
+      const cart = getCart(); cart.push(it); setCart(cart);
+      console.log('[Carrito] agregado:', it);
+    }catch(e){ console.error('addToCart error', e); }
+    if(typeof prevAdd==='function'){ try{ prevAdd(item); }catch(_){} }
+  };
+  window.buyNow = function(item){ window.addToCart(item); location.href='cart.html'; };
+  document.addEventListener('click', e=>{
+    const el = e.target.closest('[data-buy],[data-add]'); if(!el) return; e.preventDefault();
+    try{
+      const data = JSON.parse(el.getAttribute('data-buy') || el.getAttribute('data-add') || '{}');
+      if(el.hasAttribute('data-buy')) window.buyNow(data); else window.addToCart(data);
+    }catch(err){ console.error('data-buy/data-add inválido', err); }
+  });
+})();
+</script>
 </body>
 </html>
-
