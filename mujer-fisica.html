@@ -35,9 +35,17 @@ nav a{color:#fff;text-decoration:none;padding:8px 14px;border-radius:999px} nav 
 #lightbox img{max-width:92%;max-height:92%} #lightbox:target{display:flex}
 footer{background:var(--azul-footer);color:#fff;text-align:center;padding:22px 16px}
 .social img{width:28px;margin:0 8px;vertical-align:middle}
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2000;align-items:center;justify-content:center;padding:16px}
+.modal{width:100%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 12px 34px rgba(0,0,0,.25);overflow:hidden}
+.modal header{background:linear-gradient(180deg,var(--azul-top),var(--azul-bottom));color:#fff;padding:14px 16px}
+.modal .content{padding:16px}
+.form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.input{padding:10px;border:1px solid #cfd6ff;border-radius:8px;font-size:15px}
+.form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
 </style>
 </head>
 <body>
+
 <header>
   <div class="header-wrap">
     <img class="logo" src="https://i.postimg.cc/852rV0T7/Whats-App-Image-2025-03-26-at-12-46-00.jpg" alt="Logo">
@@ -71,14 +79,48 @@ footer{background:var(--azul-footer);color:#fff;text-align:center;padding:22px 1
   </div>
 </footer>
 
-<script>
-const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vRUzZtGSNl1KepY3y3jt6VbMwMTi9f2hFxJYqQqy0rITtxUtL8aSDIpORhzW9H74ItdJdNCjTY_XaNR/pub?gid=0&single=true&output=csv';
+<!-- Modal -->
+<div class="modal-backdrop" id="buyerModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="buyerTitle">
+    <header><h3 id="buyerTitle" style="margin:0">Datos del comprador</h3></header>
+    <div class="content">
+      <div class="form-row"><label>Nombre y apellido</label><input class="input" id="buyerName" type="text" placeholder="tu nombre"></div>
+      <div class="form-row"><label>Teléfono</label><input class="input" id="buyerPhone" type="tel" placeholder="12345678"></div>
+      <div class="form-row"><label>Email</label><input class="input" id="buyerEmail" type="email" placeholder="cliente@mail.com"></div>
+      <div class="form-actions">
+        <button class="btn btn-secondary" id="closeBuyer">Cerrar</button>
+        <button class="btn btn-primary" id="saveBuyer">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<script>
+/* carrito unificado */
+function getCart(){ try{ return JSON.parse(localStorage.getItem('entretalles_cart')||'[]'); }catch(e){ return []; } }
+function setCart(c){ localStorage.setItem('entretalles_cart', JSON.stringify(c||[])); }
+function addToCart(item){ const c=getCart(); item.qty=item.qty?Number(item.qty):1; c.push(item); setCart(c); }
+function buyNow(item){ addToCart(item); location.href='cart.html'; }
+
+/* modal mi cuenta */
+const buyerModal=document.getElementById('buyerModal');
+const openProfile=document.getElementById('openProfile');
+const closeBuyer=document.getElementById('closeBuyer');
+const saveBuyer=document.getElementById('saveBuyer');
+const nameInput=document.getElementById('buyerName');
+const phoneInput=document.getElementById('buyerPhone');
+const emailInput=document.getElementById('buyerEmail');
+function loadBuyer(){ try{const d=JSON.parse(localStorage.getItem('entretalles_buyer')||'{}'); nameInput.value=d.name||'tu nombre'; phoneInput.value=d.phone||'12345678'; emailInput.value=d.email||'';}catch(e){} }
+function showBuyer(){ loadBuyer(); buyerModal.style.display='flex'; }
+function hideBuyer(){ buyerModal.style.display='none'; }
+openProfile?.addEventListener('click', showBuyer);
+closeBuyer?.addEventListener('click', hideBuyer);
+buyerModal?.addEventListener('click', e=>{ if(e.target===buyerModal) hideBuyer(); });
+saveBuyer?.addEventListener('click', ()=>{ const data={name:nameInput.value.trim(),phone:phoneInput.value.trim(),email:emailInput.value.trim()}; localStorage.setItem('entretalles_buyer', JSON.stringify(data)); hideBuyer(); });
+
+/* CSV MUJER FÍSICA */
+const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vRUzZtGSNl1KepY3y3jt6VbMwMTi9f2hFxJYqQqy0rITtxUtL8aSDIpORhzW9H74ItdJdNCjTY_XaNR/pub?gid=0&single=true&output=csv';
 function parseCSV(t){const R=[];let r=[],v='',q=false;for(let i=0;i<t.length;i++){const c=t[i],n=t[i+1];if(c==='\"'){if(q&&n==='\"'){v+='\"';i++;}else q=!q;}else if(c===','&&!q){r.push(v);v='';}else if((c==='\n'||c==='\r')&&!q){if(v!==''||r.length){r.push(v);R.push(r);r=[];v='';}}else v+=c;}if(v!==''||r.length){r.push(v);R.push(r);}return R;}
-function getCart(){try{return JSON.parse(localStorage.getItem('entretalles_cart')||'[]')}catch(e){return[]}}
-function setCart(c){localStorage.setItem('entretalles_cart',JSON.stringify(c))}
-function addToCart(item){const c=getCart();c.push(item);setCart(c);}
-function buyNow(item){addToCart(item);location.href='cart.html';}
 
 let ALL=[];
 fetch(SHEET_URL).then(r=>r.text()).then(txt=>{
@@ -86,12 +128,10 @@ fetch(SHEET_URL).then(r=>r.text()).then(txt=>{
   const h=rows.shift().map(x=>x.trim().toLowerCase());
   const idx=n=>h.indexOf(n);
   const iN=idx('nombre'),iC=idx('categoria'),iI=idx('imagen'),iP=idx('precio'),iD=idx('descripcion'),iL=idx('link'),iD2=idx('descripcion 2');
-
   rows.forEach(r=>{
-    const it={nombre:(r[iN]||'').trim(),categoria:(r[iC]||'').trim().toLowerCase(),imagen:(r[iI]||'').trim(),precio:(r[iP]||'').trim(),descripcion:(r[iD]||'').trim(),link:(r[iL]||'').trim(),descripcion2:(r[iD2]||'').trim()};
+    const it={nombre:r[iN]||'',categoria:(r[iC]||'').toLowerCase(),imagen:r[iI]||'',precio:r[iP]||'',descripcion:r[iD]||'',link:r[iL]||'',descripcion2:r[iD2]||''};
     if(!it.categoria || it.categoria.includes('mujer')) ALL.push(it);
   });
-
   render(ALL);
   document.getElementById('searchInput').addEventListener('input',e=>{
     const q=e.target.value.toLowerCase();
