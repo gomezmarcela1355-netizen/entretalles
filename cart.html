@@ -103,9 +103,7 @@ footer{margin:28px 0 18px;text-align:center;color:#678}
     <!-- Columna izquierda: lista -->
     <div class="card">
       <header><h2>Productos</h2></header>
-      <div class="content" id="itemsBox">
-        <!-- items here -->
-      </div>
+      <div class="content" id="itemsBox"></div>
     </div>
 
     <!-- Columna derecha: totales -->
@@ -146,18 +144,30 @@ footer{margin:28px 0 18px;text-align:center;color:#678}
 </div>
 
 <script>
-/* ------- Storage helpers ------- */
-function getCart(){ try{ return JSON.parse(localStorage.getItem('entretalles_cart')||'[]'); }catch(e){ return []; } }
-function setCart(c){ localStorage.setItem('entretalles_cart', JSON.stringify(c)); }
+/* ===== UNIFICAR CARRITO (migración de claves viejas) ===== */
+function getCart(){
+  let c = [];
+  try { c = JSON.parse(localStorage.getItem('entretalles_cart') || '[]'); } catch(e){ c = []; }
+  const legacyKeys = ['cart', 'carrito', 'shoppingCart', 'entretallesCart'];
+  legacyKeys.forEach(k=>{
+    try {
+      const v = JSON.parse(localStorage.getItem(k) || '[]');
+      if (Array.isArray(v) && v.length) c = c.concat(v);
+      localStorage.removeItem(k);
+    } catch(e){}
+  });
+  localStorage.setItem('entretalles_cart', JSON.stringify(c));
+  return c;
+}
+function setCart(c){ localStorage.setItem('entretalles_cart', JSON.stringify(c || [])); }
 function getBuyer(){ try{ return JSON.parse(localStorage.getItem('entretalles_buyer')||'{}'); }catch(e){ return {}; } }
-function setBuyer(d){ localStorage.setItem('entretalles_buyer', JSON.stringify(d)); }
+function setBuyer(d){ localStorage.setItem('entretalles_buyer', JSON.stringify(d||{})); }
 
-/* ------- Render carrito ------- */
+/* ===== Render carrito ===== */
 const itemsBox = document.getElementById('itemsBox');
 const elSubtotal = document.getElementById('subtotal');
 const elShipping = document.getElementById('shipping');
 const elTotal    = document.getElementById('total');
-
 function fmt(n){ return '$' + (Math.round((n||0)*100)/100).toLocaleString('es-AR'); }
 
 function render(){
@@ -167,7 +177,6 @@ function render(){
     itemsBox.innerHTML = '<div class="empty">Tu carrito está vacío.</div>';
   }else{
     cart.forEach((it,idx)=>{
-      // it: {name, price, image, category, qty?}
       it.qty = it.qty || 1;
       const item = document.createElement('div');
       item.className = 'item';
@@ -194,40 +203,32 @@ function render(){
 function updateTotals(){
   const cart = getCart();
   const subtotal = cart.reduce((s,it)=> s + (it.price||0)*(it.qty||1), 0);
-  const shipping = 0; // si luego querés sumar envío, modificalo acá
+  const shipping = 0;
   const total = subtotal + shipping;
   elSubtotal.textContent = fmt(subtotal);
   elShipping.textContent = fmt(shipping);
   elTotal.textContent    = fmt(total);
 }
 
-/* qty y eliminar */
 function incQty(i){ const c=getCart(); if(!c[i])return; c[i].qty=(c[i].qty||1)+1; setCart(c); render(); }
 function decQty(i){ const c=getCart(); if(!c[i])return; c[i].qty=Math.max(1,(c[i].qty||1)-1); setCart(c); render(); }
 function removeItem(i){ const c=getCart(); c.splice(i,1); setCart(c); render(); }
 
-/* botones */
 document.getElementById('clearBtn').addEventListener('click', ()=>{
   if(confirm('¿Vaciar el carrito?')){ setCart([]); render(); }
 });
 
-/* ------- Checkout a Mercado Pago ------- */
-/* Usamos alias público: link.mercadopago.com.ar/marcelamodelista
-   Adjuntamos un mensaje con el detalle del pedido (algunos navegadores lo recortan si es muuuy largo). */
+/* ===== Checkout a Mercado Pago por alias ===== */
 const MP_ALIAS_URL = 'https://link.mercadopago.com.ar/marcelamodelista';
-
 document.getElementById('checkoutBtn').addEventListener('click', ()=>{
   const cart = getCart();
   if(!cart.length){ alert('Tu carrito está vacío.'); return; }
-
-  // Si falta nombre/teléfono/email, pedimos que complete Mi cuenta antes de pagar
   const buyer = getBuyer();
   if(!(buyer.name && buyer.phone && buyer.email)){
     alert('Antes de finalizar, completá tus datos en “Mi cuenta”.');
-    showBuyer(); // abrimos el modal
+    showBuyer(); 
     return;
   }
-
   const lines = cart.map(it => `• ${it.name} x${it.qty||1} — $${(it.price||0).toLocaleString('es-AR')}`);
   const subtotal = cart.reduce((s,it)=> s + (it.price||0)*(it.qty||1), 0);
   const msg =
@@ -239,13 +240,11 @@ ${lines.join('\n')}
 
 Total: $${subtotal.toLocaleString('es-AR')}
 `;
-
-  // abrimos Mercado Pago con mensaje
   const url = MP_ALIAS_URL + '?message=' + encodeURIComponent(msg);
   window.open(url, '_blank');
 });
 
-/* ------- Modal Mi cuenta ------- */
+/* ===== Modal Mi cuenta ===== */
 const buyerModal=document.getElementById('buyerModal');
 const openProfile=document.getElementById('openProfile');
 const closeBuyer=document.getElementById('closeBuyer');
@@ -256,8 +255,8 @@ const emailInput=document.getElementById('buyerEmail');
 
 function loadBuyer(){
   const d = getBuyer();
-  nameInput.value  = d.name  || '';
-  phoneInput.value = d.phone || '';
+  nameInput.value  = d.name  || 'tu nombre';
+  phoneInput.value = d.phone || '12345678';
   emailInput.value = d.email || '';
 }
 function showBuyer(){ loadBuyer(); buyerModal.style.display='flex'; }
@@ -269,9 +268,9 @@ buyerModal.addEventListener('click', e=>{ if(e.target===buyerModal) hideBuyer();
 
 saveBuyer.addEventListener('click', ()=>{
   const data = {
-    name:  nameInput.value.trim(),
-    phone: phoneInput.value.trim(),
-    email: emailInput.value.trim()
+    name:  (nameInput.value||'').trim(),
+    phone: (phoneInput.value||'').trim(),
+    email: (emailInput.value||'').trim()
   };
   if(!data.name || !data.phone || !data.email){
     alert('Completá nombre, teléfono y email.'); return;
