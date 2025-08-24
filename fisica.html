@@ -25,10 +25,14 @@ nav{background:var(--rosa);display:flex;justify-content:center;gap:28px;padding:
 nav a{color:#fff;text-decoration:none;padding:8px 14px;border-radius:999px}
 nav a:hover{background:rgba(255,255,255,.18)}
 
-/* Contenido placeholder */
-main{max-width:900px;margin:40px auto;padding:0 16px;text-align:center}
+/* Contenido con botones de categorías */
+main{max-width:1100px;margin:40px auto;padding:0 16px;text-align:center}
 main h2{color:#0b2f6b;font-size:28px;margin-bottom:20px}
-main p{color:#334;font-size:18px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px}
+.card{background:#f7f7f7;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:22px;text-align:center}
+.card h3{margin:4px 0 12px;color:#0b2f6b;font-size:20px}
+.btn{display:inline-block;background:var(--azul-btn);color:#fff;border:0;border-radius:9px;padding:10px 18px;text-decoration:none;font-weight:bold}
+.btn:hover{filter:brightness(1.05)}
 
 /* Footer */
 footer{background:var(--azul-footer);color:#fff;text-align:center;padding:22px 16px;margin-top:40px}
@@ -44,6 +48,7 @@ footer{background:var(--azul-footer);color:#fff;text-align:center;padding:22px 1
 .form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
 .note{font-size:12px;color:#456}
 
+@media (max-width:900px){ .grid{grid-template-columns:1fr} }
 @media (max-width:760px){
   .header-wrap{grid-template-columns:1fr 1fr;grid-template-areas:"logo actions" "brand brand"}
   .logo{grid-area:logo;width:160px}
@@ -72,13 +77,27 @@ footer{background:var(--azul-footer);color:#fff;text-align:center;padding:22px 1
 <nav>
   <a href="index.html">Inicio</a>
   <a href="digital.html">Digital</a>
+  <a href="fisica.html">Física</a>
   <a href="cart.html">🛒 Carrito</a>
 </nav>
 
 <main>
-  <h2>MOLDERÍA FÍSICA</h2>
-  <p>Aquí podrás encontrar información sobre moldes impresos, envíos y más.  
-  (Podés personalizar esta sección con fotos, tablas de precios, contacto, etc.)</p>
+  <h2>Elegí una categoría de Moldería Física</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>HOMBRE</h3>
+      <!-- más adelante podés crear hombre-fisica.html -->
+      <a class="btn" href="hombre-fisica.html">VER</a>
+    </div>
+    <div class="card">
+      <h3>MUJER</h3>
+      <a class="btn" href="mujer-fisica.html">VER</a>
+    </div>
+    <div class="card">
+      <h3>NIÑOS</h3>
+      <a class="btn" href="ninios-fisica.html">VER</a>
+    </div>
+  </div>
 </main>
 
 <footer>
@@ -90,7 +109,7 @@ footer{background:var(--azul-footer);color:#fff;text-align:center;padding:22px 1
   </div>
 </footer>
 
-<!-- MODAL DATOS DEL COMPRADOR -->
+<!-- MODAL DATOS DEL COMPRADOR (opcional) -->
 <div class="modal-backdrop" id="buyerModal">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="buyerTitle">
     <header><h3 id="buyerTitle" style="margin:0">Datos del comprador</h3></header>
@@ -144,3 +163,4 @@ saveBuyer?.addEventListener('click',()=>{
 </script>
 </body>
 </html>
+
