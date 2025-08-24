@@ -144,31 +144,31 @@ footer{margin:28px 0 18px;text-align:center;color:#678}
 </div>
 
 <script>
-/* ===== UNIFICAR CARRITO (migración de claves viejas) ===== */
+/* ====== CARRITO UNIFICADO + MIGRACIÓN CLAVES VIEJAS ====== */
 function getCart(){
   let c = [];
   try { c = JSON.parse(localStorage.getItem('entretalles_cart') || '[]'); } catch(e){ c = []; }
-  const legacyKeys = ['cart', 'carrito', 'shoppingCart', 'entretallesCart'];
+  // migrar de claves viejas si existen
+  const legacyKeys = ['entretalles_cart_v1','cart','carrito','shoppingCart','entretallesCart'];
   legacyKeys.forEach(k=>{
-    try {
+    try{
       const v = JSON.parse(localStorage.getItem(k) || '[]');
       if (Array.isArray(v) && v.length) c = c.concat(v);
       localStorage.removeItem(k);
-    } catch(e){}
+    }catch(e){}
   });
   localStorage.setItem('entretalles_cart', JSON.stringify(c));
   return c;
 }
 function setCart(c){ localStorage.setItem('entretalles_cart', JSON.stringify(c || [])); }
-function getBuyer(){ try{ return JSON.parse(localStorage.getItem('entretalles_buyer')||'{}'); }catch(e){ return {}; } }
-function setBuyer(d){ localStorage.setItem('entretalles_buyer', JSON.stringify(d||{})); }
 
-/* ===== Render carrito ===== */
+function fmt(n){ return '$' + (Math.round((n||0)*100)/100).toLocaleString('es-AR'); }
+
+/* ====== RENDER ====== */
 const itemsBox = document.getElementById('itemsBox');
 const elSubtotal = document.getElementById('subtotal');
 const elShipping = document.getElementById('shipping');
 const elTotal    = document.getElementById('total');
-function fmt(n){ return '$' + (Math.round((n||0)*100)/100).toLocaleString('es-AR'); }
 
 function render(){
   const cart = getCart();
@@ -218,33 +218,10 @@ document.getElementById('clearBtn').addEventListener('click', ()=>{
   if(confirm('¿Vaciar el carrito?')){ setCart([]); render(); }
 });
 
-/* ===== Checkout a Mercado Pago por alias ===== */
-const MP_ALIAS_URL = 'https://link.mercadopago.com.ar/marcelamodelista';
-document.getElementById('checkoutBtn').addEventListener('click', ()=>{
-  const cart = getCart();
-  if(!cart.length){ alert('Tu carrito está vacío.'); return; }
-  const buyer = getBuyer();
-  if(!(buyer.name && buyer.phone && buyer.email)){
-    alert('Antes de finalizar, completá tus datos en “Mi cuenta”.');
-    showBuyer(); 
-    return;
-  }
-  const lines = cart.map(it => `• ${it.name} x${it.qty||1} — $${(it.price||0).toLocaleString('es-AR')}`);
-  const subtotal = cart.reduce((s,it)=> s + (it.price||0)*(it.qty||1), 0);
-  const msg =
-`Pedido ENTRETALLES
-Cliente: ${buyer.name} | Tel: ${buyer.phone} | Email: ${buyer.email}
+/* ====== Perfil / Comprador ====== */
+function getBuyer(){ try{ return JSON.parse(localStorage.getItem('entretalles_buyer')||'{}'); }catch(e){ return {}; } }
+function setBuyer(d){ localStorage.setItem('entretalles_buyer', JSON.stringify(d||{})); }
 
-Artículos:
-${lines.join('\n')}
-
-Total: $${subtotal.toLocaleString('es-AR')}
-`;
-  const url = MP_ALIAS_URL + '?message=' + encodeURIComponent(msg);
-  window.open(url, '_blank');
-});
-
-/* ===== Modal Mi cuenta ===== */
 const buyerModal=document.getElementById('buyerModal');
 const openProfile=document.getElementById('openProfile');
 const closeBuyer=document.getElementById('closeBuyer');
@@ -277,6 +254,33 @@ saveBuyer.addEventListener('click', ()=>{
   }
   setBuyer(data);
   hideBuyer();
+});
+
+/* ====== Checkout a Mercado Pago por alias ====== */
+const MP_ALIAS_URL = 'https://link.mercadopago.com.ar/marcelamodelista';
+
+document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+  const cart = getCart();
+  if(!cart.length){ alert('Tu carrito está vacío.'); return; }
+  const buyer = getBuyer();
+  if(!(buyer.name && buyer.phone && buyer.email)){
+    alert('Antes de finalizar, completá tus datos en “Mi cuenta”.');
+    showBuyer(); 
+    return;
+  }
+  const lines = cart.map(it => `• ${it.name} x${it.qty||1} — $${(it.price||0).toLocaleString('es-AR')}`);
+  const subtotal = cart.reduce((s,it)=> s + (it.price||0)*(it.qty||1), 0);
+  const msg =
+`Pedido ENTRETALLES
+Cliente: ${buyer.name} | Tel: ${buyer.phone} | Email: ${buyer.email}
+
+Artículos:
+${lines.join('\n')}
+
+Total: $${subtotal.toLocaleString('es-AR')}
+`;
+  const url = MP_ALIAS_URL + '?message=' + encodeURIComponent(msg);
+  window.open(url, '_blank');
 });
 
 /* init */
