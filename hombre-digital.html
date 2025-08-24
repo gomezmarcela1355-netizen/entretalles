@@ -132,6 +132,7 @@ saveBuyer?.addEventListener('click', ()=>{ const data={name:nameInput.value.trim
 
 /* ===== Hoja HOMBRE Digital ===== */
 const SHEET_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vS5an_7J08u97YLD48ZUVkTG5vjvJeuNsmUEPcfjkxbDQJUFaWrjjFuKFpimNX0To8g877pOsZxXvL_/pub?gid=0&single=true&output=csv';
+
 function parseCSV(t){const R=[];let r=[],v='',q=false;for(let i=0;i<t.length;i++){const c=t[i],n=t[i+1];if(c==='\"'){if(q&&n==='\"'){v+='\"';i++;}else q=!q;}else if(c===','&&!q){r.push(v);v='';}else if((c==='\n'||c==='\r')&&!q){if(v!==''||r.length){r.push(v);R.push(r);r=[];v='';}}else v+=c;}if(v!==''||r.length){r.push(v);R.push(r);}return R;}
 
 let ALL=[];
@@ -154,7 +155,8 @@ fetch(SHEET_URL).then(r=>r.text()).then(txt=>{
 function render(list){
   const box=document.getElementById('products'); box.innerHTML='';
   list.forEach(it=>{
-    const itemForCart={name:it.nombre||'', price:parseFloat((it.precio||'0').toString().replace('.','').replace(',','.'))||0, image:it.imagen||'', category:'Digital • Hombre'};
+    const priceNum = Number(String(it.precio||'0').replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',', '.')) || 0;
+    const itemForCart = { name:it.nombre||'', price:priceNum, image:it.imagen||'', category:'Digital • Hombre' };
     const card=document.createElement('div'); card.className='card';
     card.innerHTML=`
       <img src="${it.imagen||''}" alt="${it.nombre||''}" onclick="openLightbox('${(it.imagen||'').replace(/'/g,"\\'")}')">
@@ -171,6 +173,38 @@ function render(list){
 
 function scrollCarousel(d){document.getElementById('products').scrollBy({left:d*(360+28),behavior:'smooth'});}
 function openLightbox(src){document.getElementById('lightbox-img').src=src; location.hash='lightbox';}
+</script>
+
+<!-- PUENTE DE COMPATIBILIDAD (unifica clave y soporta data-buy/data-add) -->
+<script>
+(function(){
+  const KEY = 'entretalles_cart';
+  function getCart(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ return []; } }
+  function setCart(c){ localStorage.setItem(KEY, JSON.stringify(c||[])); }
+  function priceToNumber(p){ if(typeof p==='number') return p; return Number(String(p||'0').replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',', '.')) || 0; }
+  const prevAdd = window.addToCart;
+  window.addToCart = function(item){
+    try{
+      const it = Object.assign({}, item||{});
+      it.name  = it.name  || it.nombre || '';
+      it.image = it.image || it.imagen || '';
+      it.price = priceToNumber(it.price ?? it.precio);
+      it.qty   = Number(it.qty||1);
+      it.category = it.category || it.categoria || '';
+      const cart = getCart(); cart.push(it); setCart(cart);
+      console.log('[Carrito] agregado:', it);
+    }catch(e){ console.error('addToCart error', e); }
+    if(typeof prevAdd==='function'){ try{ prevAdd(item); }catch(_){} }
+  };
+  window.buyNow = function(item){ window.addToCart(item); location.href='cart.html'; };
+  document.addEventListener('click', e=>{
+    const el = e.target.closest('[data-buy],[data-add]'); if(!el) return; e.preventDefault();
+    try{
+      const data = JSON.parse(el.getAttribute('data-buy') || el.getAttribute('data-add') || '{}');
+      if(el.hasAttribute('data-buy')) window.buyNow(data); else window.addToCart(data);
+    }catch(err){ console.error('data-buy/data-add inválido', err); }
+  });
+})();
 </script>
 </body>
 </html>
